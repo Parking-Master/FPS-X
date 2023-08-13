@@ -1,0 +1,2 @@
+# FPS-X
+FPS-X is an open source version of FPS based on version 3. It is the highest-performing game in the series with simple yet amazing functions to build whatever you want with it.
