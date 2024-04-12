@@ -15,6 +15,11 @@ On top of that, The _FPS battles_ (the classic FPS-style game) will also include
 
 As for the game's performance, we've done lots of research on [Three.js](https://threejs.org) on how to get the best performance in this game possible. No more lags, glitches, players losing connection, etc.
 
+### Update: Fair game for all players
+We've just implemented a new script into the prototype of the game, which sets the game UI and screen to a native 16:10 aspect ratio, then scales the screen down on various sized monitors.
+
+We have tried building something similar for FPS3, but failed. This script actually achieves the goal of what we wanted: a fair game for all players. All players will now have a screen that is a 16:10 ratio.
+
 ### Update: Multiplayer functions, graphics, and performance are doing good so far
 Using [Gametime.js-X](https://x.gametime.js.org), we've been able to get awesome results so far with the multiplayer functions. It can hold up  to 8 players as we know of, and unlike the previous FPS games, it is not just a 1v1 game and can hold multiple players at once.
 
