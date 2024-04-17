@@ -618,7 +618,7 @@
       });
       async function reloadModel(model) {
         return new Promise(function(resolve) {
-          new THREE.GLTFLoader().load(sandbox.models[model].path, function(gltf) {
+          new THREE.GLTFLoader().load(`https://parking-master.github.io/FPS-X/beta-1.0.0/${sandbox.models[model].path.startsWith("/") ? sandbox.models[model].path.replace("/", "") : sandbox.models[model].path}`, function(gltf) {
             let result = {};
             result.model = gltf.scene;
             sandbox.models[model].callback(gltf);
@@ -643,7 +643,7 @@
       }
       function load(url, callback) {
         if (Object.keys(utils.cache.models).indexOf(url) > -1) return callback(utils.cache.models[url]);
-        new THREE.GLTFLoader().load(url, function(model) {
+        new THREE.GLTFLoader().load(`https://parking-master.github.io/FPS-X/beta-1.0.0/${url.startsWith("/") ? url.replace("/", "") : url}`, function(model) {
           utils.cache.models[url] = model;
           callback(model);
         });
