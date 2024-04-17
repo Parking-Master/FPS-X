@@ -168,7 +168,7 @@
       }
       .weapon-ammo-icon {
         display: inline-block;
-        background-image: url("/images/icons/bullet.png");
+        background-image: url("https://parking-master.github.io/FPS-X/beta-1.0.0/images/icons/bullet.png");
         background-repeat: no-repeat;
         background-size: cover;
         height: 28px;
@@ -220,7 +220,7 @@
         margin-bottom: 5px;
       }
       .charge-icon {
-        background-image: url("/images/icons/bolt.png");
+        background-image: url("https://parking-master.github.io/FPS-X/beta-1.0.0/images/icons/bolt.png");
         background-size: contain;
         height: 24px;
         width: 24px;
@@ -245,7 +245,7 @@
         font-size: 40px;
       }
       .health-icon {
-        background-image: url("/images/icons/health.png");
+        background-image: url("https://parking-master.github.io/FPS-X/beta-1.0.0/images/icons/health.png");
         background-size: contain;
         height: 42px;
         width: 42px;
@@ -800,7 +800,7 @@
 
         // If the map has any metadata, it will be extracted and used here
         if (map.children[0] && map.children[0].userData.sky && map.children[0].userData.sky != "none") {
-          new THREE.TextureLoader().load(`/images/other/sky/${map.children[0].userData.sky}.png`, function(texture) {
+          new THREE.TextureLoader().load(`https://parking-master.github.io/FPS-X/beta-1.0.0/images/other/sky/${map.children[0].userData.sky}.png`, function(texture) {
             let sky = new THREE.Mesh(new THREE.SphereGeometry(100, 25, 25), new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }));
             sky.material.side = THREE.BackSide;
             scene.add(sky);
