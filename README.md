@@ -4,6 +4,13 @@ FPS-X will be an open source version of [FPS](https://github.com/Parking-Master/
 Actual developement on this exciting project will not begin until __June 2024__.
 
 
+### ❗ Update: Almost there!
+If you don't know already, actual focused development on FPS-X will begin _June 10th_. Next week, development starts!
+
+If you've been following these updates, you probably know that we've progressively been working on a prototype of what the game will sort-of be like. It is going to be an ultra-performant game fit for many more devices than with the previous FPS games. It will also feature plenty of misc content and game modes. In the mean time, we've also been discovering bugs from all three previous games and finding numerous ways to fix all of them. The beta version is located [here](https://parking-master.github.io/FPS-X/beta-1.0.0).
+
+Can't wait? Neither can we! We want to make the greatest FPS game in the world, and better yet, make it free + available to play right in your browser. This game doesn't have an official release date yet, but the release date will be revealed sometime in July or August. The game should be done and available by October or November though. It's annoying that it won't be released for quite a while, but just remember, quality takes time.
+
 ### ❗ Update: Beta 1.0.0 released!
 Today (4/17/24) we released the first ever prototype version of FPS-X. Some users report that it runs pretty smoothly on Macbook Pros, iPad Pros, and some iMacs. It also has a touch screen UI that was imported from the last game (FPS3), but the controls have been updated a little.
 
