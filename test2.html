@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+body {
+  margin: 0;
+  position: fixed;
+  inset: 0;
+  display: flex;
+}
+
+canvas {
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+  background-color: blue;
+}
+    </style>
+</head>
+<body>
+  <script src="https://fps3.uk.to/js/three.min.js"></script>
+  <script>
+      const renderer = new THREE.WebGLRenderer({antialias:true});
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      renderer.setPixelRatio(2);
+      camera.aspect = 1440 / 900;
+      camera.updateProjectionMatrix();
+      renderer.setSize(1440, 900);
+      document.body.appendChild(renderer.domElement);
+
+      function animate() {
+        renderer.render(scene, camera);
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      cube=new THREE.Mesh(new THREE.BoxGeometry(1,1,1));
+scene.add(cube);
+cube.position.z=-5;
+cube.position.x=-2;
+
+renderer.domElement.style="";
+renderer.domElement.width="1440";
+renderer.domElement.height="900";
+renderer.setViewport(0, 0, 1440 / 2, 900 / 2);
+window.addEventListener("resize", function() {
+  camera.aspect = 1440 / 900;
+  renderer.setViewport(0, 0, 1440 / 2, 900 / 2);
+  camera.updateProjectionMatrix();
+});
+</script>
+</body>
+</html>
