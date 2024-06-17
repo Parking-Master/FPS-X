@@ -12,7 +12,7 @@ About 24 weeks left of development.
 - 6/6 Rifles have been added so far.
 - 12 Reload sounds have been added.
 - 6 Shooting sounds have been added.
-- New zooming capabilities have been added, where the game is programmed to zoom into the 3d gun, instead of display a fake scope image like FPS3.
+- New zooming capabilities have been added, where the game is programmed to zoom into the 3d gun, instead of displaying a fake scope image like FPS3.
 
 ### ❗ Update: Almost there!
 If you don't know already, actual focused development on FPS-X will begin _June 10th_. Next week, development starts!
