@@ -294,6 +294,7 @@
     <script src="https://x.gametime.js.org/gametime.js"></script>
     <script src="/lib/tween.min.js"></script>
     <script src="/lib/audio.js"></script>
+    <script src="/lib/plugins.js"></script>
 
     <!-- This is the main UI for the player -->
     <div class="ui" id="game-ui">
@@ -644,7 +645,51 @@
             "model": null,
             "path": "/models/weapons/SKS.glb",
             "callback": function(model) {}
-          }
+          },
+          "weapon_Glock-19": {
+            "name": "Glock-19",
+            "loaded": false,
+            "model": null,
+            "path": "/models/weapons/Glock-19.glb",
+            "callback": function(model) {}
+          },
+          "weapon_XD-Mod-2": {
+            "name": "XD-Mod-2",
+            "loaded": false,
+            "model": null,
+            "path": "/models/weapons/XD-Mod-2.glb",
+            "callback": function(model) {
+              model.scene.traverse(object => object.frustumCulled = false);
+            }
+          },
+          "weapon_FN-502": {
+            "name": "FN-502",
+            "loaded": false,
+            "model": null,
+            "path": "/models/weapons/FN-502.glb",
+            "callback": function(model) {}
+          },
+          "weapon_Desert-Eagle": {
+            "name": "Desert-Eagle",
+            "loaded": false,
+            "model": null,
+            "path": "/models/weapons/Desert-Eagle.glb",
+            "callback": function(model) {}
+          },
+          "weapon_Railgun": {
+            "name": "Railgun",
+            "loaded": false,
+            "model": null,
+            "path": "/models/weapons/Railgun.glb",
+            "callback": function(model) {}
+          },
+          "weapon_Precision-Railgun": {
+            "name": "Precision-Railgun",
+            "loaded": false,
+            "model": null,
+            "path": "/models/weapons/Precision-Railgun.glb",
+            "callback": function(model) {}
+          },
         },
         weapons: {
           "AK-74": {
@@ -653,7 +698,16 @@
             ammoCurrent: 30,
             ammoType: "rifle",
             magazineCurrent: 4,
-            firingModes: ["semi", "full"]
+            firingModes: ["semi", "full"],
+            animationStructure: {
+              idle: [0, 1],
+              draw: [1, 1],
+              walk: [2, 1],
+              run: [3, 1],
+              shoot: [4, 1],
+              reload: [5, 1],
+              reload_full: [7, 1]
+            }
           },
           "AR-15": {
             name: "AR-15",
@@ -661,7 +715,16 @@
             ammoCurrent: 30,
             ammoType: "rifle",
             magazineCurrent: 3,
-            firingModes: ["semi", "full", "burst"]
+            firingModes: ["semi", "full", "burst"],
+            animationStructure: {
+              idle: [0, 1],
+              draw: [1, 1],
+              walk: [2, 1],
+              run: [3, 1],
+              shoot: [4, 1],
+              reload: [5, 1],
+              reload_full: [7, 1]
+            }
           },
           "M16": {
             name: "M16",
@@ -669,7 +732,16 @@
             ammoCurrent: 18,
             ammoType: "rifle",
             magazineCurrent: 3,
-            firingModes: ["semi", "full", "burst"]
+            firingModes: ["semi", "full", "burst"],
+            animationStructure: {
+              idle: [0, 1],
+              draw: [1, 1],
+              walk: [2, 1],
+              run: [3, 1],
+              shoot: [4, 1],
+              reload: [5, 1],
+              reload_full: [7, 1]
+            }
           },
           "MK-14": {
             name: "MK-14",
@@ -677,7 +749,16 @@
             ammoCurrent: 20,
             ammoType: "rifle",
             magazineCurrent: 4,
-            firingModes: ["semi"]
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [0, 1],
+              draw: [1, 1],
+              walk: [2, 1],
+              run: [3, 1],
+              shoot: [4, 1],
+              reload: [5, 1],
+              reload_full: [7, 1]
+            }
           },
           "SCAR-H": {
             name: "SCAR-H",
@@ -685,7 +766,16 @@
             ammoCurrent: 10,
             ammoType: "rifle",
             magazineCurrent: 3,
-            firingModes: ["semi", "full"]
+            firingModes: ["semi", "full"],
+            animationStructure: {
+              idle: [0, 1],
+              draw: [1, 1],
+              walk: [2, 1],
+              run: [3, 1],
+              shoot: [4, 1],
+              reload: [5, 1],
+              reload_full: [7, 1]
+            }
           },
           "SKS": {
             name: "SKS",
@@ -693,10 +783,109 @@
             ammoCurrent: 10,
             ammoType: "rifle",
             magazineCurrent: 2,
-            firingModes: ["semi"]
-          }
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [0, 1],
+              draw: [1, 1],
+              walk: [2, 1],
+              run: [3, 1],
+              shoot: [4, 1],
+              reload: [5, 1],
+              reload_full: [7, 1]
+            }
+          },
+          "Glock-19": {
+            name: "Glock-19",
+            ammoCapacity: 15,
+            ammoCurrent: 15,
+            ammoType: "pistol",
+            magazineCurrent: 2,
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [1, .1],
+              walk: [0, 1],
+              shoot: [2, 1],
+              reload: [3, 1],
+              reload_full: [4, 1]
+            }
+          },
+          "XD-Mod-2": {
+            name: "XD-Mod-2",
+            ammoCapacity: 9,
+            ammoCurrent: 9,
+            ammoType: "pistol",
+            magazineCurrent: 2,
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [0, 1],
+              walk: [1, 1],
+              shoot: [2, .6],
+              reload: [3, .7],
+              reload_full: [4, .7]
+            }
+          },
+          "FN-502": {
+            name: "FN-502",
+            ammoCapacity: 10,
+            ammoCurrent: 10,
+            ammoType: "pistol",
+            magazineCurrent: 2,
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [1, .1],
+              walk: [0, 1],
+              shoot: [2, 1],
+              reload: [3, 1],
+              reload_full: [4, 1]
+            }
+          },
+          "Desert-Eagle": {
+            name: "Desert-Eagle",
+            ammoCapacity: 7,
+            ammoCurrent: 7,
+            ammoType: "pistol",
+            magazineCurrent: 2,
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [1, .1],
+              walk: [0, .8],
+              shoot: [2, 1],
+              reload: [3, .7],
+              reload_full: [4, .7]
+            }
+          },
+          "Railgun": {
+            name: "Railgun",
+            ammoCapacity: 1,
+            ammoCurrent: 1,
+            ammoType: "railgun",
+            magazineCurrent: 3,
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [0, 1],
+              walk: [1, .6],
+              shoot: [2, .6],
+              reload: [3, .5],
+              reload_full: [3, .5]
+            }
+          },
+          "Precision-Railgun": {
+            name: "Precision-Railgun",
+            ammoCapacity: 4,
+            ammoCurrent: 4,
+            ammoType: "railgun",
+            magazineCurrent: 2,
+            firingModes: ["semi"],
+            animationStructure: {
+              idle: [0, 1],
+              walk: [1, .5],
+              shoot: [2, .6],
+              reload: [3, .4],
+              reload_full: [3, .4]
+            }
+          },
         },
-        loadout: ["MK-14", "..."]
+        loadout: ["Precision-Railgun", "..."]
       };
 
       if (params().map) {
@@ -723,55 +912,74 @@
           }
         },
         weapons: {
-          playAnimation: function(animation) {
+          playAnimation: function(animation, callback = () => {}) {
+            let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
             if (animation === "idle") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[0]);
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["idle"][0];
+              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["idle"][1];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.timeScale = animationTimeScale;
               clip.loop = THREE.LoopRepeat;
               clip.reset();
               clip.play();
             }
             if (animation === "walk") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[2]);
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["walk"][0];
+              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["walk"][1];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.timeScale = animationTimeScale;
               clip.loop = THREE.LoopPingPong;
               clip.reset();
               clip.play();
             }
             if (animation === "reload") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[5]);
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["reload"][0];
+              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["reload"][1];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.timeScale = animationTimeScale;
               clip.loop = THREE.LoopOnce;
               clip.reset();
               clip.play();
             }
             if (animation === "full-reload") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[7]);
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["reload_full"][0];
+              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["reload_full"][1];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.timeScale = animationTimeScale;
               clip.loop = THREE.LoopOnce;
               clip.reset();
               clip.play();
             }
             if (animation === "shoot") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[4]);
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["shoot"][0];
+              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["shoot"][1];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.timeScale = animationTimeScale;
               clip.loop = THREE.LoopOnce;
               clip.reset();
               clip.play();
             }
-            // weaponScene.add(sandbox.models[`weapon_${weapon}`].model);
+
+            currentWeapon.mixer.addEventListener("finished", callback);
           },
           stopAnimation: function(animation) {
+            let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
             if (animation === "idle") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let idleClip = currentWeapon.mixer.clipAction(currentWeapon.animations[0]);
-              idleClip.stop();
-              idleClip.reset();
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["idle"][0];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.stop();
+              clip.reset();
             }
             if (animation === "walk") {
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              let idleClip = currentWeapon.mixer.clipAction(currentWeapon.animations[2]);
-              idleClip.fadeOut(1);
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["walk"][0];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.fadeOut(1);
+            }
+            if (animation === "shoot") {
+              let animationIndex = sandbox.currentWeapon.alias.animationStructure["shoot"][0];
+              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
+              clip.stop();
+              clip.reset();
             }
 
             // weaponScene.add(sandbox.models[`weapon_${weapon}`].model);
@@ -823,30 +1031,53 @@
               }
             }
           },
-          shoot: function(shots = 1, timing = 100) {
+          shoot: function(repeat = false, shots = 1, timing = 100) {
+            let reloadDelay = sandbox.currentWeapon.alias.ammoCapacity === 1 ? 200 : null;
             let shotCount = 0;
-            let shotIteration = setInterval(() => {
-              if (shotCount >= shots) return clearInterval(shotIteration);
-              if (sandbox.currentWeapon.alias.ammoCurrent <= 1) return utils.weapons.reload(true);
-              shotCount++;
+            let shotDelay = 0;
+            let sound = true;
+            function next() {
+              let shotIteration = setInterval(() => {
+                if (shotCount >= shots) return clearInterval(shotIteration);
+                shotCount++;
 
-              let weaponData = sandbox.currentWeapon.children[0].userData;
-              sandbox.currentWeapon.alias.ammoCurrent--;
-              utils.weapons.playAnimation("shoot");
-              if (sandbox.currentWeapon.children[0].userData.boltMoves) {
-                let bolt = sandbox.currentWeapon.getObjectByName(sandbox.currentWeapon.children[0].userData.boltObject);
-                let boltLength = sandbox.currentWeapon.children[0].userData.boltLength;
-                new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: -boltLength }, timing / 4).easing(TWEEN.Easing.Quadratic.InOut).start();
-                setTimeout(() => {
-                  new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: 0 }, timing / 4).easing(TWEEN.Easing.Quadratic.InOut).start();
-                }, (timing / 4) + 10);
+                let weaponData = sandbox.currentWeapon.children[0].userData;
+                sandbox.currentWeapon.alias.ammoCurrent--;
+                utils.weapons.playAnimation("shoot");
+                if (sandbox.currentWeapon.children[0].userData.boltMoves) {
+                  let bolt = sandbox.currentWeapon.getObjectByName(sandbox.currentWeapon.children[0].userData.boltObject);
+                  let boltLength = sandbox.currentWeapon.children[0].userData.boltLength;
+                  new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: -boltLength }, timing / 4).easing(TWEEN.Easing.Quadratic.InOut).start();
+                  setTimeout(() => {
+                    new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: 0 }, timing / 4).easing(TWEEN.Easing.Quadratic.InOut).start();
+                  }, (timing / 4) + 10);
+                }
+                if (sound) THREE.Sound(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`, false);
+
+                utils.weapons.update();
+                if (sandbox.currentWeapon.alias.ammoCurrent < 1) return utils.weapons.reload(true, reloadDelay), clearInterval(shotIteration);
+              }, timing);
+            }
+            if (sandbox.currentWeapon.alias.ammoType === "railgun") {
+              if (!repeat) {
+                sound = false;
+                THREE.Sound(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`, false);
+                let triggerChecker = setInterval(() => {
+                  if (!shootRapid) clearTimeout(shotDelay), THREE.Sound.stop(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`);;
+                });
+                shots = sandbox.currentWeapon.alias.ammoCapacity;
+                shotDelay = setTimeout(() => (next(), clearInterval(triggerChecker)), 500);
               }
-              THREE.Sound(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`, false);
-
-              utils.weapons.update();
-            }, timing);
+            } else {
+              next();
+            }
           },
-          reload: function(full) {
+          reload: async function(full, reloadDelay = null) {
+            if (reloadDelay) await plugins.delay(reloadDelay);
+            // Stop the other animations temporarily
+            utils.weapons.stopAnimation("idle");
+            utils.weapons.stopAnimation("shoot");
+
             // Reset the ammo count
             sandbox.currentWeapon.alias.ammoCurrent = sandbox.currentWeapon.alias.ammoCapacity;
 
@@ -862,10 +1093,10 @@
             }
 
             if (full) {
-              utils.weapons.playAnimation("full-reload");
+              utils.weapons.playAnimation("full-reload", () => utils.weapons.playAnimation("idle"));
               THREE.Sound(`preloaded:reloadingfull_${sandbox.currentWeapon.alias.name}`, false);
             } else {
-              utils.weapons.playAnimation("reload");
+              utils.weapons.playAnimation("reload", () => utils.weapons.playAnimation("idle"));
               THREE.Sound(`preloaded:reloading_${sandbox.currentWeapon.alias.name}`, false);
             }
 
@@ -879,6 +1110,7 @@
                 }, 100);
               }, (sandbox.currentWeapon.children[0].userData.magMoveTimeStart + sandbox.currentWeapon.children[0].userData.magMoveTimeEnd) + 550);
             }
+
           },
           setPrimary: function(model) {
             sandbox.primaryWeapon = model;
@@ -1066,6 +1298,7 @@
       onWindowResize();
 
       let globalRepeat = false;
+      let shootRapid = false;
       document.addEventListener("keydown", (event) => {
         if (!PointerControls.isLocked) return;
         keyStates[event.code] = true;
@@ -1073,7 +1306,7 @@
         if (!event.repeat && !globalRepeat && keyStates["KeyW"] || keyStates["ArrowUp"] || keyStates["KeyA"] || keyStates["ArrowLeft"] || keyStates["KeyS"] || keyStates["ArrowDown"] || keyStates["KeyD"] || keyStates["ArrowRight"]) utils.weapons.playAnimation("walk");
         if (!event.repeat && keyStates["KeyI"]) utils.weapons.zoom();
 
-        if (keyStates["KeyF"]) utils.weapons.shoot();
+        if (keyStates["KeyF"]) shootRapid = true, utils.weapons.shoot(event.repeat);
 
         globalRepeat = true;
       });
@@ -1092,6 +1325,7 @@
         }, 1000);
 
         if (!(keyStates["KeyW"] || keyStates["ArrowUp"] || keyStates["KeyA"] || keyStates["ArrowLeft"] || keyStates["KeyS"] || keyStates["ArrowDown"] || keyStates["KeyD"] || keyStates["ArrowRight"])) utils.weapons.stopAnimation("walk"), gametime.run("halt", [gametime.player.position]);
+        shootRapid = false;
       });
 
       document.addEventListener("mousemove", (event) => {
