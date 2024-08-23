@@ -19,6 +19,14 @@ About 18 weeks left of development.
 - Major performance updates have been introduced, optimizing gameplay for more general/older devices and browsers.
 - New zooming capabilities have been added, where the game is programmed to zoom into the 3d gun, instead of displaying a fake scope image like FPS3.
 
+### Current job(s)
+- Create all hand-held weapons, weapon sound effects, and weapon capabilities
+  - Planned finish time: 3 weeks from now
+
+### Next job
+- Add controls and UI for Touch Screens, Gamepads, and Desktops
+  - Plan to start: 3 weeks from now
+
 ### ❗ Update: Almost there!
 If you don't know already, actual focused development on FPS-X will begin _June 10th_. Next week, development starts!
 
