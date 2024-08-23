@@ -5,13 +5,18 @@ Development on FPS-X has begun on __June 10th 2024__, and is not expected to be 
 
 ### ❗ Update: Development progress tracker
 This tracker shows the current progress of this project.
->8% <img height="10" width="6%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
+>17% <img height="10" width="6%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
 
-About 24 weeks left of development.
+About 18 weeks left of development.
 
-- 6/6 Rifles have been added so far.
-- 12 Reload sounds have been added.
-- 6 Shooting sounds have been added.
+- 6/6 Rifles have been added.
+- 4/4 Pistols have been added.
+- 4/4 Sniper rifles have been added.
+- 3/3 Shotguns have been added.
+- 38 Reload sounds have been added.
+- 19 Shooting sounds have been added.
+- Special gun effects have been added, such as bullet trails, leftover cartridges, and bullet holes.
+- Major performance updates have been introduced, optimizing gameplay for more general/older devices and browsers.
 - New zooming capabilities have been added, where the game is programmed to zoom into the 3d gun, instead of displaying a fake scope image like FPS3.
 
 ### ❗ Update: Almost there!
