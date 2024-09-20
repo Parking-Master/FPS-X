@@ -7,7 +7,7 @@ Development on FPS-X has begun on __June 10th 2024__, and is not expected to be 
 This tracker shows the current progress of this project.
 >17% <img height="10" width="17%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
 
-About 18 weeks left of development.
+About 11 weeks left of development.
 
 - 6/6 Rifles have been added.
 - 4/4 Pistols have been added.
@@ -20,12 +20,13 @@ About 18 weeks left of development.
 - New zooming capabilities have been added, where the game is programmed to zoom into the 3d gun, instead of displaying a fake scope image like FPS3.
 
 ### Current job(s)
-- Create all hand-held weapons, weapon sound effects, and weapon capabilities
-  - Planned finish time: 3 weeks from now
+- <s>Create all hand-held weapons, weapon sound effects, and weapon capabilities
+  - Planned finish time: 3 weeks from now</s>
+  - **This job has been paused until further notice.**
 
 ### Next job
 - Add controls and UI for Touch Screens, Gamepads, and Desktops
-  - Plan to start: 3 weeks from now
+  - Plan to start: 3 days from now
 
 ### ❗ Update: Almost there!
 If you don't know already, actual focused development on FPS-X will begin _June 10th_. Next week, development starts!
