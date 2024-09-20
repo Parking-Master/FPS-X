@@ -5,7 +5,7 @@ Development on FPS-X has begun on __June 10th 2024__, and is not expected to be 
 
 ### ❗ Update: Development progress tracker
 This tracker shows the current progress of this project.
->17% <img height="10" width="17%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
+>47% <img height="10" width="47%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
 
 About 11 weeks left of development.
 
