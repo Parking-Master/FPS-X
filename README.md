@@ -26,7 +26,7 @@ About 11 weeks left of development.
 
 ### Next job
 - Add controls and UI for Touch Screens, Gamepads, and Desktops
-  - Plan to start: 2 days from now
+  - Plan to start: tomorrow
 
 ### ❗ Update: Almost there!
 If you don't know already, actual focused development on FPS-X will begin _June 10th_. Next week, development starts!
