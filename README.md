@@ -1,13 +1,16 @@
 # FPS-X
 FPS-X will be an open source version of [FPS](https://github.com/Parking-Master/FPS) based on [version 3](https://github.com/Parking-Master/FPS3). It will be the highest-performing game in the series with simple yet amazing functions to build whatever you want with it.
 
-Development on FPS-X has begun on __June 10th 2024__, and is not expected to be released until late October or mid November.
+Development on FPS-X has begun on __June 10th 2024__, and is not expected to be released until early December.
+
+### ❗ Update: Estimated release date
+We're finally almost there, with just about a month left of development before FPS-X is released for everyone to play! While it will still be a little bit longer until an exact release date is revealed, expect the game to release sometime during the first half of December, pushing more towards the "later" side of the month.
 
 ### ❗ Update: Development progress tracker
 This tracker shows the current progress of this project.
->56% <img height="10" width="47%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
+>65% <img height="10" width="65%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
 
-About 11 weeks left of development.
+About 4 weeks left of development.
 
 - 6/6 Rifles have been added.
 - 4/4 Pistols have been added.
@@ -18,6 +21,14 @@ About 11 weeks left of development.
 - Special gun effects have been added, such as bullet trails, leftover cartridges, and bullet holes.
 - Major performance updates have been introduced, optimizing gameplay for more general/older devices and browsers.
 - New zooming capabilities have been added, where the game is programmed to zoom into the 3d gun, instead of displaying a fake scope image like FPS3.
+- All multiplayer functions and capabilities have been implemented.
+- Grenades have been implemented.
+- The new loading screen UI and API have been created and successfully been fully implemented.
+- 5/6 playable FPS maps have been added.
+- Zooming sound effects to all guns have been added.
+- Death effects, death screens, kill effects, and kill medals have all been added.
+- 3/3 playable FPS characters have been added.
+- Highly advanced AI bots and their corresponding servers have been added.
 
 ### Current job(s)
 - Add controls and UI for Touch Screens, Gamepads, and Desktops
