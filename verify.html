@@ -1,0 +1,17 @@
+Please wait, you will be redirected shortly.
+<script>
+let params = new URLSearchParams(location.search);
+if (params.get("v") && params.get("email") && params.get("v").length === 32) {
+  fetch(`https://hardy-beetle-free.ngrok-free.app/account/verify?v=${params.get("v")}&email=${params.get("email")}`, {
+    headers: {
+      "ngrok-skip-browser-warning": "69420"
+    }
+  }).then(response => {
+    if (response.status === 200) {
+      location.replace("/?m=0");
+    } else {
+      location.replace("/?m=1");
+    }
+  });
+}
+</script>

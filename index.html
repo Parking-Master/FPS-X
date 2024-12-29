@@ -2,1518 +2,1383 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPS-X web shooter</title>
+    <title>FPS-X</title>
+    <link rel="preload" href="/fonts/Thunderbolt.otf" as="font" type="font/otf" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;900&display=swap");
-      html, body {
-        margin: 0;
-        overflow: hidden !important;
-        touch-action: none !important;
-        user-select: none !important;
-        -webkit-user-select: none !important;
-        -khtml-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        -webkit-touch-callout: none !important;
+      @import url("/fonts/WorkSans/WorkSans.css");
+      @font-face {
+        font-family: "Thunderbolt";
+        src: url(/fonts/Thunderbolt.otf);
+        font-display: swap
+      }
+
+      html {
         background: #000;
       }
-      * {
-        touch-action: manipulation;
+      html, body {
+        overflow: hidden !important;
+        user-select: none !important;
+        -moz-user-select: none !important;
+        -webkit-user-select: none !important;
       }
-      body {
-        margin: 0;
-        position: fixed;
-        inset: 0;
-        display: flex;
-      }
-      .vignette {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        margin: 0;
-        padding: 0;
-        pointer-events: none !important;
-        transition: opacity .15s;
-      }
-      .crosshair {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        left: 50%;
-        top: 50%;
-        margin-left: -25px;
-        margin-top: -25px;
-      }
-      .ui {
-        pointer-events: none !important;
+      .wrapper {
         width: 1440px;
         height: 900px;
         position: fixed;
-        left: 50%;
-        margin-left: -720px;
         top: 50%;
+        left: 50%;
         margin-top: -450px;
-        transform: scale(.5);
-        font-family: "Montserrat", sans-serif;
-        z-index: 9999999999;
+        margin-left: -720px;
+        background-image: url(/images/other/menu/0.png);
+        background-size: cover;
+        background-position: center center;
       }
-      .row {
+      .tabs {
+        position: relative;
         width: 100%;
-        height: 100%;
         display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: flex-end;
-      }
-      .column {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
+        top: 30px;
       }
-      .left-ui {
-        position: absolute;
-        left: 100px;
-        bottom: 50px; 
-        background: rgba(1, 1, 1, 0);
-        width: 400px;
-        height: 120px;
-        padding: 10px 10px;
-        border-radius: 10px;
-      }
-      .right-ui {
-        position: absolute;
-        right: 100px;
-        bottom: 50px; 
-        background: transparent;
-        width: 400px;
-        height: 100px;
-        padding: 10px 10px;
-        border-radius: 10px;
-      }
-      .top-right-ui {
-        position: absolute;
-        right: 100px;
-        top: 50px; 
-        background: transparent;
-        width: 400px;
-        height: 100px;
-        padding: 10px 10px;
-        border-radius: 10px;
-      }
-      .top-left-ui {
-        position: absolute;
-        top: 200px; 
-        background: transparent;
-        width: 400px;
-        height: 100px;
-        border-radius: 10px;
-      }
-      .ui-area {
-        display: flex;
-        height: 100%;
-        width: 100%;
-        flex-direction: column;
-        justify-content: flex-end;
-      }
-      .ui-glow {
-        border-radius: 5px;
-        box-shadow: inset -20px -40px 40px rgba(255, 255, 255, 0.125), 0 0 0 2px rgba(255, 255, 255, 0.5), inset -40px -60px 60px rgba(255, 255, 255, 0.125), 7px 7px 20px rgba(0, 0, 0, 0.3);
-      }
-      .left-ui-area {
-        transform: perspective(600px) rotateY(30deg) rotatez(-3deg);
-        padding-right: 50px;
-      }
-      .right-ui-area {
-        transform: perspective(600px) rotateY(-30deg) rotatez(3deg);
-      }
-      .top-right-ui-area {
-        transform: perspective(600px) rotateY(-30deg) rotatez(-3deg);
-      }
-      .top-left-ui-area {
+      .tab {
+        width: 260px;
+        border: 3px solid #fff;
+        margin-right: 20px;
+        margin-left: 20px;
+        padding: 5px;
         text-align: center;
-      }
-      .ammo-area {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .ammo-area > .ammo-icon {
-        margin: 5px;
-      }
-      .ammo-icon {
-        width: 48px;
-        height: 48px;
-        filter: invert(1) drop-shadow(2px 2px 4px);
-      }
-      .weapon-text {
-        color: white;
-        text-shadow: 0px -2px 1px #ccc, 0px 2px 1px gray, 2px 2px 2px rgb(0, 0, 0);
-        font-size: 16px;
-      }
-      .weapon-pic-text {
-        color: white;
-        text-shadow: 0px -2px 1px #ccc, 0px 2px 1px gray, 2px 2px 2px rgb(0, 0, 0);
-        font-size: 32px;
-      }
-      .weapon-icon {
-        /* background-image: url("./resources/ui/paintball.png"); */
-        background-repeat: no-repeat;
-        background-size: contain;
-        width: 110px;
-        height: 40px;
-      }
-      .weapon-ammo-icon {
-        display: inline-block;
-        background-image: url("/images/icons/bullet.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 28px;
-        width: 28px;
-        margin-left: 5px;
-        filter: invert(1) drop-shadow(1px 1px 3px #000);
-      }
-      .charge-area {
-        margin: 10px;
-        justify-content: right;
-      }
-      .charge-bar {
-        height: 24px;
-        width: 200px;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 5px;
-      }
-      .charge-bar-active {
-        height: 100%;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgb(255, 255, 255), inset 0 0 10px rgb(255, 255, 255);
-      }
-      .charge-text {
         color: #fff;
-        text-shadow: 0px -2px 1px #ccc, 0px 2px 1px gray, 2px 2px 2px rgb(0, 0, 0);
-        font-size: 24px;
+        font-family: "Work Sans", Arial;
+        font-weight: 300;
+        font-size: 20px;
+        cursor: pointer;
       }
-      .weapon-text-icon {
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 24px;
-        width: 24px;
-        margin-left: 5px;
-        filter: invert(1) drop-shadow(2px 2px 4px);
+      .tab.selected {
+        background: #fff;
+        color: black;
+        mix-blend-mode: screen;
       }
-      .weapon-pic-icon {
-        background-size: contain;
-        height: 40px;
-        width: 40px;
-        margin-left: 5px;
-        filter: invert(1) drop-shadow(2px 2px 4px);
+      .tab:hover:not(.selected), .tab.hover:not(.selected) {
+        background: rgba(255, 255, 255, 0.3);
       }
-      .weapon-area {
-        margin-left: 10px;
+      .sub-menu {
+        position: absolute;
+        left: 150px;
+        bottom: 200px;
       }
-      .weapon-top-row {
-        min-height: 30px;
+      .sub-menu .item {
+        width: 500px;
+        font-family: "Work Sans", Arial;
+        font-size: 34px;
+        font-weight: 250;
+        color: #fff;
+        border-bottom: 2.5px solid #fff;
+        margin-top: 20px;
+      }
+      .sub-menu .item:hover, .sub-menu .item.hover {
+        border-width: 4px;
+        margin-bottom: -1.5px;
+        font-weight: 400;
+        cursor: pointer;
+      }
+      .info {
+        position: absolute;
+        right: 10px;
+        bottom: 35px;
+        text-align: right;
+      }
+      .info .version {
+        font-size: 40px;
+        color: #fff;
+        font-family: "Work Sans", Arial;
+        font-weight: 300;
         margin-bottom: 5px;
       }
-      .charge-icon {
-        background-image: url("/images/icons/bolt.png");
-        background-size: contain;
-        height: 24px;
-        width: 24px;
-      }
-      .charge-icon-main {
-        filter: invert(1) drop-shadow(1px 1px 3px);
-      }
-      .health-area {
-        margin: 10px;
-        justify-content: right;
-      }
-      .health-bar {
-        height: 48px;
-        width: 200px;
-        margin: 5px;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 5px;
-      }
-      .health-text {
+      .info .copyright {
+        font-size: 20px;
         color: #fff;
-        text-shadow: 0px -2px 1px #ccc, 0px 2px 1px gray, 2px 2px 2px rgb(0, 0, 0);
-        font-size: 40px;
+        font-family: "Work Sans", Arial;
+        font-weight: 200;
       }
-      .health-icon {
-        background-image: url("/images/icons/health.png");
-        background-size: contain;
-        height: 42px;
-        width: 42px;
-        margin-left: 5px;
+      .swal-modal {
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 0;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(3px);
+        overflow: hidden;
+        animation: none !important;
       }
-      .health-icon-main {
-        filter: invert(1) drop-shadow(1px 1px 3px);
+      .swal-text, .swal-title {
+        color: #fff !important;
+        font-family: "Thunderbolt", Arial;
       }
-      .health-bar-active {
-        height: 100%;
-        background-color: rgb(109, 201, 83);
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgb(109, 201, 83), inset 0 0 10px rgb(196, 211, 227);
+      .swal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      .weapon-magazine-icon {
+      .swal-button-container {
+        width: 40%;
+        white-space: nowrap;
+      }
+      .swal-button {
+        width: 100%;
+        white-space: nowrap;
+        border: 2px solid #fff;
+        background: transparent;
+        border-radius: 0;
+        color: #fff;
+        box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1), 0 5px 10px rgba(255, 255, 255, 0.3) !important;
+      }
+      .swal-button:hover, .swal-button.hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+      }
+      .gamepad-cursor {
+        position: absolute;
+        z-index: 99999999999;
+        width: 20px;
+        height: 20px;
+        background: transparent;
+        border-radius: 100%;
+        border: 3px solid #eee;
+        outline: 1px solid #000;
+        margin-left: -10px;
+        margin-top: -10px;
+        visibility: hidden;
+      }
+      .swal-content.scrollable {
+        position: relative;
+        height: 200px;
+        overflow-y: scroll;
+        background: #fff;
+        text-align: left;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        width: 75%;
+        left: 50%;
+        margin-left: -42%;
+      }
+      .weapon-select {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: 2.4px solid #fff;
+        border-radius: 8px;
+        padding: 8px;
+        width: 96px;
+        height: 96px;
+        margin-right: 8px;
+      }
+      .weapon-select.selected {
+        outline: 4.8px solid #fff;
+      }
+      .weapon-select:hover, .weapon-select.hover {
+        background: rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+      }
+      .weapon-select-image {
+        width: 56px;
+        height: 56px;
+        filter: invert(1) drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+      }
+      .weapon-select-title {
+        color: #fff;
+        margin-left: 4px;
+        font-family: "Thunderbolt", Arial;
+        font-size: 16px;
+      }
+      .options-wrapper {
+        position: absolute;
+        left: 100px;
+        bottom: 10px;
+      }
+      .primary-weapon-selection {
+        margin-bottom: 10px;
+      }
+      .weapon-selection-header {
+        color: #fff;
+        font-family: "Work Sans", Arial;
+        font-size: 30px;
+      }
+      .options-header-main {
+        font-size: 20px;
+        color: #fff;
+        font-family: "Work Sans", Arial;
+        margin-top: 30px;
+      }
+      .options-header-main::before {
+        content: "";
         display: inline-block;
-        background-image: url("/images/icons/magazine.png");
+        width: 30px;
+        height: 30px;
+        background-image: url(/images/icons/arrowhead_right.png);
+        background-size: contain;
         background-repeat: no-repeat;
-        background-size: cover;
-        height: 28px;
-        width: 28px;
-        margin-left: 25px;
-        filter: invert(1) drop-shadow(1px 1px 3px #000);
+        filter: invert(1);
+        margin-top: -5px;
+        vertical-align: middle;
+        line-height: 10px;
       }
-      canvas {
-        max-width: 100%;
-        max-height: 100%;
-        margin: auto;
+      .look-sensitivity-header {
+        font-family: "Work Sans", Arial;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+      }
+      .look-sensitivity-wrapper {
+        float: left;
+      }
+      #pointer-speed-value-text {
+        position: relative;
+        color: #fff;
+        margin-left: 10px;
+        font-family: "Thunderbolt", Arial;
+        font-size: 26px;
+        border: 1px solid #fff;
+        padding: 5px;
+        padding-top: 0;
+        width: 30px;
+        text-align: center;
+        display: inline-block;
+      }
+      .custom-slider {
+        position: relative;
+        width: 200px;
+        height: 20px;
+        display: inline-block;
+      }
+      .slider-track {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 2px;
+        border: 1px solid #ccc;
+        background: transparent;
+      }
+      .slider-thumb {
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        cursor: default;
+      }
+      .slider-thumb:active {
+        background: #ccc;
+      }
+      .account-wrapper {
+        position: absolute;
+        left: 100px;
+        bottom: 100px;
+      }
+      .input {
+        background: transparent;
+        border: 3px solid #fff;
+        width: 300px;
+        padding: 3px;
+        font-family: "Thunderbolt", Arial;
+        color: #fff;
+        font-size: 30px;
+      }
+      .input.login-input.password {
+        width: 250px;
+      }
+      .input.login-input.readonly-username.edit {
+        width: 250px;
+      }
+      .input.login-input.readonly-username.edit + button.login-input.submit {
+        display: inline-block;
+        margin-left: 0 !important;
+      }
+      .input.login-input.readonly-username + button.login-input.submit {
+        display: none;
+      }
+      button.login-input.submit {
+        background: #fff;
+        border: none;
+        width: 39px;
+        padding: 6px;
+        font-size: 30px;
+        margin-left: 5px;
+        color: #222;
+        float: right;
+        text-align: center;
+        cursor: pointer;
+      }
+      button.login-input.submit:active {
+        background: #ccc;
+      }
+      .account-header {
+        font-family: "Work Sans", Arial;
+        font-size: 20px;
+        font-weight: 500;
+        color: #fff;
+      }
+      .account-subheader {
+        font-family: "Work Sans", Arial;
+        font-size: 14px;
+        font-weight: 300;
+        color: #fff;
+        margin: 0;
+      }
+      .select {
+        background: #fff;
+        width: 200px;
+        padding: 3px;
+        font-family: "Thunderbolt", Arial;
+        font-size: 20px;
+        border: none;
+        color: #000 !important;
+      }
+      button.logout {
+        color: #dc3545;
+        border: 3px solid #dc3545;
+        background: transparent;
+        font-family: "Thunderbolt", Arial;
+        font-size: 30px;
+        padding: 3px;
+        padding-top: 0;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      button.logout:hover, button.logout.hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      .account-link {
+        display: inline-block;
+        font-family: "Thunderbolt", Arial;
+        font-size: 30px;
+        color: #fff;
+        height: 30px;
+        border-bottom: 1px solid currentColor;
+        cursor: pointer;
+      }
+      .account-link:hover, .account-link.hover {
+        color: #ccc;
+      }
+      .account-link:active {
+        color: #aaa;
+      }
+      .swal-content__input {
+        background: transparent;
+        font-family: "Work Sans", Arial;
+        font-size: 20px;
+        font-weight: 100;
+        color: #fff;
+        border: 3px solid #fff !important;
+        border-radius: none;
+        box-shadow: none;
+        outline: none;
+      }
+      .game-preset-wrapper .option-header {
+        display: block;
+        color: #fff;
+        font-family: "Work Sans", Arial;
+        font-size: 18px;
+        margin-bottom: 5px !important;
+      }
+      .game-preset-description {
+        display: block;
+        color: #fff;
+        font-family: "Thunderbolt", Arial;
+        font-size: 16px;
+      }
+      .controls-binding-wrapper {
+        position: relative;
+        float: right;
+        margin: 0 !important;
+        left: -200px;
+      }
+      .button.controls-binding-button {
+        background: #fff;
+        border: none;
+        width: 250px;
+        padding: 10px;
+        font-family: Arial;
+        font-size: 20px;
+        display: block;
+        margin-top: 30px;
+        cursor: default;
+        color: #000;
+      }
+      .button.controls-binding-button:hover, .button.controls-binding-button.hover {
+        background: #ddd;
+      }
+      .controls-binding-header {
+        text-align: left;
+        color: #fff;
+        font-size: 12px;
+        font-family: Arial;
+      }
+      .controls-binding-box {
+        text-align: left;
+        color: #fff;
+        font-size: 12px;
+        float: right;
+        margin-top: -32px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid #888;
+        padding: 3px;
+        width: 50px;
+        font-family: Arial;
+      }
+      .controls-binding-box:hover, .controls-binding-box.hover {
+        background: rgba(80, 80, 80, 0.6);
+      }
+      .error-message {
+        color: #ff0000;
+        font-family: monospace, Arial;
       }
     </style>
+    <script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
   </head>
   <body>
-    <!-- All of the pre-loaded scripts will go here -->
-    <script src="https://fps3.uk.to/js/three.min.js"></script>
-    <script src="https://fps3.uk.to/js/GLTFLoader.min.js"></script>
-    <script src="https://fps3.uk.to/js/fflate.min.js"></script>
-    <script src="https://fps3.uk.to/js/Capsule.min.js"></script>
-    <script src="https://fps3.uk.to/js/Octree.min.js"></script>
-    <script src="https://fps3.uk.to/js/PointerLockControls.min.js"></script>
-    <script src="https://fps3.uk.to/js/GamepadControls.min.js"></script>
-    <script src="https://fps3.uk.to/js/TouchControls.min.js"></script>
-    <script src="https://fps3.uk.to/js/UI.js"></script>
-    <script src="https://x.gametime.js.org/gametime.js"></script>
-    <script src="/lib/tween.min.js"></script>
-    <script src="/lib/audio.js"></script>
-    <script src="/lib/plugins.js"></script>
-
-    <!-- This is the main UI for the player -->
-    <div class="ui" id="game-ui">
-      <img class="vignette" src="images/other/vignette.png">
-      <img class="crosshair" src="images/icons/ui/crosshair.png">
-
-      <div class="left-ui">
-        <div class="ui-area ui-glow left-ui-area" id="left-ui-area">
-          <div class="row">
-            <div class="column">
-              <div class="charge-text" id="charge-text">100%</div>
-              <div class="health-text" id="health-text">100</div>
-            </div>
-            <div class="column">
-              <div class="charge-icon charge-icon-main"></div>
-              <div class="health-icon health-icon-main"></div>
-            </div>
-            <div class="column">
-              <div class="charge-bar">
-                <div class="charge-bar-active" id="charge-bar"></div>
-              </div>
-              <div class="health-bar">
-                <div class="health-bar-active"></div>
-              </div>
-            </div>
-          </div>
+    <div class="gamepad-cursor"></div>
+    <div class="wrapper">
+      <div class="tabs">
+        <div class="tab selected" onclick="selectTab(this)" data-tab="play">PLAY</div>
+        <div class="tab" onclick="selectTab(this)" data-tab="options">OPTIONS</div>
+        <div class="tab" onclick="selectTab(this)" data-tab="shop">SHOP</div>
+        <div class="tab" onclick="selectTab(this)" data-tab="account">LOG IN</div>
+      </div>
+      <div class="content">
+        <div class="sub-menu">
+          <div class="item" onclick="subMenuAction(this)" data-action="search-game">SEARCH FOR GAME</div>
+          <div class="item" onclick="subMenuAction(this)" data-action="game-presets">GAME PRESETS</div>
+          <div class="game-preset-wrapper"></div>
+          <div class="item" onclick="subMenuAction(this)" data-action="custom-lan-server">CUSTOM LAN SERVER</div>
+          <div class="item" onclick="subMenuAction(this)" data-action="help">HELP</div>
         </div>
       </div>
-      <div class="right-ui">
-        <div class="ui-area ui-glow right-ui-area" id="right-ui-area">
-          <div class="row">
-            <div class="column weapon-area">
-              <div class="weapon-text weapon-top-row"></div>
-              <div class="weapon-pic-text"><div class="weapon-ammo-icon"></div> <span class="weapon-ammo-number">36</span> <div class="weapon-magazine-icon"></div> <span class="weapon-magazine-number">4</span></div>
-            </div>
-            <div class="column weapon-area">
-              <div class="weapon-text-icon weapon-top-row"></div>
-              <div class="weapon-pic-icon"></div>
-            </div>
-            <div class="column weapon-area">
-              <div class="weapon-icon">
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="info">
+        <div class="version">v1.0.0</div>
+        <div class="copyright">&copy; 2025 Parking Master</div>
       </div>
     </div>
+
+    <script src="/lib/user.js"></script>
+    <script src="/lib/plugins.js"></script>
+    <script src="/lib/MenuControls.js"></script>
+    <script src="/lib/HtmlRange.js"></script>
+    <script src="https://x.gametime.js.org/gametime.js"></script>
     <script>
       (async () => {
-        // Setup Gametime.js-X for multiplayer
-
         // We'll try to connect to a Gametime.js-X socket server, but will use PubNub instead if not available
-        await gametime.setCustomServer(["https://caribou-needed-implicitly.ngrok-free.app", "https://new-suitably-gnu.ngrok-free.app"]);
+        await gametime.setCustomServer(["http://weatherstationpi.local:4444", "https://caribou-needed-implicitly.ngrok-free.app", "https://new-suitably-gnu.ngrok-free.app", "https://gratefully-engaged-bluebird.ngrok-free.app"]);
         await gametime.set("channel", "example-channel123");
         await gametime.set("key", "pub-c-99b84afd-1fa3-4452-a727-4b46d06a11e2", "sub-c-ed7e8e7f-1c0a-40ec-bc97-7da421c062a0");
         await gametime.sustain();
 
-        setInterval(async () => {
-          if (!opposingPlayerObjects[gametime.players.length - 1]) {
-            let playerObject = await reloadModel("character");
-            playerObject.name = `Player_${gametime.players.length}_Character`;
-            playerObject.model.position.y = -1000;
-            if (!(scene.children.indexOf(playerObject.model) > -1)) scene.add(playerObject.model);
-            opposingPlayerObjects.push(playerObject);
+        gametime.on("decideLobbyName", function(lobbyOptions) {
+          if (lobbyOptions.name === global.lobbyName) {
+            matchFound(lobbyOptions);
           }
-        }, 5000);
-
-        // All multiplayer functions go here
-        gametime.on("move", function(direction, speed, animation, player) {
-          if (player == gametime.player.position) return;
-
-          opposingPlayerObjects[player - 1].walking = true;
-
-          if (direction === "forward") opposingPlayerObjects[player - 1].model.translateZ(-speed);
-          if (direction === "left") opposingPlayerObjects[player - 1].model.translateX(-speed);
-          if (direction === "backward") opposingPlayerObjects[player - 1].model.translateZ(speed);
-          if (direction === "rights") opposingPlayerObjects[player - 1].model.translateX(speed);
-          if (direction === "fixed") {
-            if (opposingPlayerObjects[player - 1].jumping) {
-              opposingPlayerObjects[player - 1].model.position.x = speed.split(",")[0] - 0;
-              opposingPlayerObjects[player - 1].model.position.z = speed.split(",")[2] - 0;
-            } else {
-              opposingPlayerObjects[player - 1].model.position.set(speed.split(",")[0] - 0, speed.split(",")[1] - 1, speed.split(",")[2] - 0);
-            }
-          }
-
-          if (animation) {
-            const clip = opposingPlayerObjects[player - 1].mixer.clipAction(opposingPlayerObjects[player - 1].animations[0]);
-            clip.loop = THREE.LoopRepeat;
-            clip.play();
-          }
-        });
-
-        gametime.on("halt", function(player) {
-          if (player == gametime.player.position) return;
-
-          opposingPlayerObjects[player - 1].walking = false;
-
-          const clip = opposingPlayerObjects[player - 1].mixer.clipAction(opposingPlayerObjects[player - 1].animations[0]);
-          clip.stop();
-          clip.reset();
-        });
-
-        gametime.on("rotate", function(vector, player) {
-          if (player == gametime.player.position) return;
-
-          // Here is an opportunity for updating the player's position while they look around
-          if (!opposingPlayerObjects[player - 1].jumping) {
-            let position = new THREE.Vector3(vector.split(",")[3] - 0, vector.split(",")[4] - 0, vector.split(",")[5] - 0);
-            opposingPlayerObjects[player - 1].model.position.set(position.x, position.y - 1, position.z);
-          }
-
-          let rotation = new THREE.Vector3(vector.split(",")[0] - 0, vector.split(",")[1] - 0, vector.split(",")[2] - 0);
-          opposingPlayerObjects[player - 1].model.rotation.order = "YXZ";
-          opposingPlayerObjects[player - 1].model.rotation.y = rotation.y;
-          if (!opposingPlayerObjects[player - 1].walking) opposingPlayerObjects[player - 1].model.getObjectByName("mixamorigHead").rotation.x = -(rotation.x + .1);
-        });
-
-        gametime.on("jump", function(player) {
-          if (player == gametime.player.position) return;
-
-          opposingPlayerObjects[player - 1].jumping = true;
-
-          let currentPosition = opposingPlayerObjects[player - 1].model.position.y;
-          let newPosition = 0;
-
-          // We'll make the character move their legs when they jump
-          if (!opposingPlayerObjects[player - 1].walking) {
-            const clip = opposingPlayerObjects[player - 1].mixer.clipAction(opposingPlayerObjects[player - 1].animations[0]);
-            clip.loop = THREE.LoopRepeat;
-            clip.play();
-          }
-
-          let jump1, jump = setInterval(() => {
-            if (newPosition >= .8) return jump1 = setInterval(() => {
-              if (newPosition <= 0) return opposingPlayerObjects[player - 1].model.position.y = currentPosition, opposingPlayerObjects[player - 1].jumping = false, (() => {
-                  const clip = opposingPlayerObjects[player - 1].mixer.clipAction(opposingPlayerObjects[player - 1].animations[0]);
-                  clip.timeScale = 1;
-                  if (!opposingPlayerObjects[player - 1].walking) {
-                    clip.stop();
-                    clip.reset();
-                  }
-                })(), clearInterval(jump1);
-                newPosition -= .05;
-                opposingPlayerObjects[player - 1].model.position.y = currentPosition + newPosition;
-              }, 10), (() => {
-              if (!opposingPlayerObjects[player - 1].walking) {
-                const clip = opposingPlayerObjects[player - 1].mixer.clipAction(opposingPlayerObjects[player - 1].animations[0]);
-                clip.loop = THREE.LoopRepeat;
-                clip.timeScale = -1;
-                clip.play();
-              }
-            })(), clearInterval(jump);
-            newPosition += .05;
-            opposingPlayerObjects[player - 1].model.position.y = currentPosition + newPosition;
-          }, 10);
-        });
+        })
       })();
 
-      const renderOptions = {
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance"
-      };
-      const playerDefaultPosition = {
-        x: 13.5,
-        y: .35,
-        z: -18.5
-      };
-      const vector2 = new THREE.Vector2();
-      const vector3 = new THREE.Vector3();
-      const vector4 = new THREE.Vector4();
-
-      let keyStates = {};
-      let opposingPlayerObjects = [];
-      let playerOnFloor = false;
-      let previousTouch = null;
-      let allowedToJump = true;
-
-      const STEPS_PER_FRAME = 4;
-      const GRAVITY = 40;
-
-      // Default properties (sorted most important first)
-      const renderer = new THREE.WebGLRenderer(renderOptions);
-      const weaponRenderer = new THREE.WebGLRenderer(renderOptions);
-      const scene = new THREE.Scene();
-      const weaponScene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, 1440 / 900, 0.1, 1000);
-      const weaponCamera = new THREE.PerspectiveCamera(60, 1440 / 900, 0.1, 1000);
-      const clock = new THREE.Clock();
-      const worldOctree = new THREE.Octree();
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-      const hemisphereLight = new THREE.HemisphereLight(0xa1c5e0, 0x002244, 0.5);
-
-      // Player setup
-      const playerCollider = new THREE.Capsule(new THREE.Vector3(0, .35, 0), new THREE.Vector3(0, 1, 0), .35);
-      const playerVelocity = vector3.clone();
-      const playerDirection = vector3.clone();
-
-      // Default property configuration (camera, scene, renderer, etc.)
-      renderer.setPixelRatio(window.devicePixelRatio - .2);
-      renderer.setSize(1440, 900);
-      renderer.setClearAlpha();
-      renderer.setClearColor(0x000000, 0);
-      weaponRenderer.setClearAlpha();
-      weaponRenderer.setClearColor(0x000000, 0);
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type = THREE.VSMShadowMap;
-      renderer.outputEncoding = THREE.sRGBEncoding;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping;
-
-      renderer.domElement.style = "";
-      renderer.domElement.width = "1440";
-      renderer.domElement.height = "900";
-      renderer.setViewport(0, 0, (1440 / 2) + 80, (900 / 2) + 50);
-
-      weaponRenderer.setPixelRatio(window.devicePixelRatio - .2);
-      weaponRenderer.setSize(1440, 900);
-      weaponRenderer.domElement.style = "position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); pointer-events: none !important";
-      weaponRenderer.domElement.width = "1440";
-      weaponRenderer.domElement.height = "900";
-      weaponRenderer.setViewport(0, 0, (1440 / 2) + 80, (900 / 2) + 50);
-      weaponRenderer.outputEncoding = THREE.sRGBEncoding;
-      weaponRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-      camera.rotation.order = "YXZ";
-      weaponCamera.rotation.order = "YXZ";
-      playerCollider.start.set(playerDefaultPosition.x, playerDefaultPosition.y, playerDefaultPosition.z);
-      playerCollider.end.set(playerDefaultPosition.x, playerDefaultPosition.y + .65, playerDefaultPosition.z);
-      directionalLight.position.set(-5, 25, -1);
-      directionalLight.castShadow = true;
-      directionalLight.shadow.camera.near = .01;
-      directionalLight.shadow.camera.far = 500;
-      directionalLight.shadow.camera.right = 30;
-      directionalLight.shadow.camera.left = -30;
-      directionalLight.shadow.camera.top = 30;
-      directionalLight.shadow.camera.bottom = -30;
-      directionalLight.shadow.mapSize.width = 1024;
-      directionalLight.shadow.mapSize.height = 1024;
-      directionalLight.shadow.radius = 4;
-      directionalLight.shadow.bias = -0.00006;
-      hemisphereLight.position.set(2, 1, 1);
-      document.body.appendChild(renderer.domElement);
-      document.body.appendChild(weaponRenderer.domElement);
-
-      // Add all of these default properties to the scene(s)
-      scene.add(hemisphereLight);
-      scene.add(directionalLight);
-      weaponScene.add(hemisphereLight.clone());
-      weaponScene.add(directionalLight.clone());
-
-      function animate() {
-        // Here we'll set up two deltas. Once for animations (default delta time) and one for player controls (relative delta time)
-        const clockDelta = clock.getDelta();
-        const deltaTime = Math.min(0.05, clockDelta) / STEPS_PER_FRAME;
-
-        // Render the scenes and repeat the loop
-        renderer.render(scene, camera);
-        weaponRenderer.render(weaponScene, weaponCamera);
-
-        // Everything that needs to be repeated goes here
-        camera.position.copy(playerCollider.end);
-
-        for (let i = 0; i < Object.keys(sandbox.models).length; i++) {
-          let model = Object.keys(sandbox.models)[i];
-          if (sandbox.models[model].mixer && sandbox.models[model].animations) {
-            sandbox.models[model].mixer.update(clockDelta);
-          }
-        }
-
-        for (let i = 0; i < opposingPlayerObjects.length; i++) {
-          let model = opposingPlayerObjects[i];
-          if (model.mixer && model.animations) {
-            model.mixer.update(clockDelta);
-          }
-        }
-
-        // Update everything that needs to be updated here
-        teleportPlayerIfOob();
-        TWEEN.update();
-        for (let i = 0; i < STEPS_PER_FRAME; i++) {
-          controls(deltaTime);
-          updatePlayer(deltaTime);
-          utils.camera.updatePosition();
-          utils.weapons.updatePosition();
-        }
-        requestAnimationFrame(animate);
-      }
-
-      // Global variables go here
-      let nullObject = new THREE.Group();
-      let map = nullObject;
-
-      // Global properties go here
-      sandbox = {
-        map: null,
-        primaryWeapon: null,
-        secondaryWeapon: null,
-        currentWeapon: null,
-        models: {
-          "character": {
-            "name": "character",
-            "loaded": false,
-            "model": null,
-            "path": "/models/characters/Max.glb",
-            "callback": function(model) {
-              model.scene.traverse(object => object.frustumCulled = false);
-              model.scene.scale.set(.008, .008, .008);
-            }
-          },
-          "weapon_AK-74": {
-            "name": "AK-74",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/AK-74.glb",
-            "callback": function(model) {}
-          },
-          "weapon_AR-15": {
-            "name": "AR-15",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/AR-15.glb",
-            "callback": function(model) {}
-          },
-          "weapon_M16": {
-            "name": "M16",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/M16.glb",
-            "callback": function(model) {}
-          },
-          "weapon_MK-14": {
-            "name": "MK-14",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/MK-14.glb",
-            "callback": function(model) {}
-          },
-          "weapon_SCAR-H": {
-            "name": "SCAR-H",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/SCAR-H.glb",
-            "callback": function(model) {}
-          },
-          "weapon_SKS": {
-            "name": "SKS",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/SKS.glb",
-            "callback": function(model) {}
-          },
-          "weapon_Glock-19": {
-            "name": "Glock-19",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/Glock-19.glb",
-            "callback": function(model) {}
-          },
-          "weapon_XD-Mod-2": {
-            "name": "XD-Mod-2",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/XD-Mod-2.glb",
-            "callback": function(model) {
-              model.scene.traverse(object => object.frustumCulled = false);
-            }
-          },
-          "weapon_FN-502": {
-            "name": "FN-502",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/FN-502.glb",
-            "callback": function(model) {}
-          },
-          "weapon_Desert-Eagle": {
-            "name": "Desert-Eagle",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/Desert-Eagle.glb",
-            "callback": function(model) {}
-          },
-          "weapon_Railgun": {
-            "name": "Railgun",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/Railgun.glb",
-            "callback": function(model) {}
-          },
-          "weapon_Precision-Railgun": {
-            "name": "Precision-Railgun",
-            "loaded": false,
-            "model": null,
-            "path": "/models/weapons/Precision-Railgun.glb",
-            "callback": function(model) {}
-          },
-        },
-        weapons: {
-          "AK-74": {
-            name: "AK-74",
-            ammoCapacity: 30,
-            ammoCurrent: 30,
-            ammoType: "rifle",
-            magazineCurrent: 4,
-            firingModes: ["semi", "full"],
-            animationStructure: {
-              idle: [0, 1],
-              draw: [1, 1],
-              walk: [2, 1],
-              run: [3, 1],
-              shoot: [4, 1],
-              reload: [5, 1],
-              reload_full: [7, 1]
-            }
-          },
-          "AR-15": {
-            name: "AR-15",
-            ammoCapacity: 30,
-            ammoCurrent: 30,
-            ammoType: "rifle",
-            magazineCurrent: 3,
-            firingModes: ["semi", "full", "burst"],
-            animationStructure: {
-              idle: [0, 1],
-              draw: [1, 1],
-              walk: [2, 1],
-              run: [3, 1],
-              shoot: [4, 1],
-              reload: [5, 1],
-              reload_full: [7, 1]
-            }
-          },
-          "M16": {
-            name: "M16",
-            ammoCapacity: 18,
-            ammoCurrent: 18,
-            ammoType: "rifle",
-            magazineCurrent: 3,
-            firingModes: ["semi", "full", "burst"],
-            animationStructure: {
-              idle: [0, 1],
-              draw: [1, 1],
-              walk: [2, 1],
-              run: [3, 1],
-              shoot: [4, 1],
-              reload: [5, 1],
-              reload_full: [7, 1]
-            }
-          },
-          "MK-14": {
-            name: "MK-14",
-            ammoCapacity: 20,
-            ammoCurrent: 20,
-            ammoType: "rifle",
-            magazineCurrent: 4,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [0, 1],
-              draw: [1, 1],
-              walk: [2, 1],
-              run: [3, 1],
-              shoot: [4, 1],
-              reload: [5, 1],
-              reload_full: [7, 1]
-            }
-          },
-          "SCAR-H": {
-            name: "SCAR-H",
-            ammoCapacity: 10,
-            ammoCurrent: 10,
-            ammoType: "rifle",
-            magazineCurrent: 3,
-            firingModes: ["semi", "full"],
-            animationStructure: {
-              idle: [0, 1],
-              draw: [1, 1],
-              walk: [2, 1],
-              run: [3, 1],
-              shoot: [4, 1],
-              reload: [5, 1],
-              reload_full: [7, 1]
-            }
-          },
-          "SKS": {
-            name: "SKS",
-            ammoCapacity: 10,
-            ammoCurrent: 10,
-            ammoType: "rifle",
-            magazineCurrent: 2,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [0, 1],
-              draw: [1, 1],
-              walk: [2, 1],
-              run: [3, 1],
-              shoot: [4, 1],
-              reload: [5, 1],
-              reload_full: [7, 1]
-            }
-          },
-          "Glock-19": {
-            name: "Glock-19",
-            ammoCapacity: 15,
-            ammoCurrent: 15,
-            ammoType: "pistol",
-            magazineCurrent: 2,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [1, .1],
-              walk: [0, 1],
-              shoot: [2, 1],
-              reload: [3, 1],
-              reload_full: [4, 1]
-            }
-          },
-          "XD-Mod-2": {
-            name: "XD-Mod-2",
-            ammoCapacity: 9,
-            ammoCurrent: 9,
-            ammoType: "pistol",
-            magazineCurrent: 2,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [0, 1],
-              walk: [1, 1],
-              shoot: [2, .6],
-              reload: [3, .7],
-              reload_full: [4, .7]
-            }
-          },
-          "FN-502": {
-            name: "FN-502",
-            ammoCapacity: 10,
-            ammoCurrent: 10,
-            ammoType: "pistol",
-            magazineCurrent: 2,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [1, .1],
-              walk: [0, 1],
-              shoot: [2, 1],
-              reload: [3, 1],
-              reload_full: [4, 1]
-            }
-          },
-          "Desert-Eagle": {
-            name: "Desert-Eagle",
-            ammoCapacity: 7,
-            ammoCurrent: 7,
-            ammoType: "pistol",
-            magazineCurrent: 2,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [1, .1],
-              walk: [0, .8],
-              shoot: [2, 1],
-              reload: [3, .7],
-              reload_full: [4, .7]
-            }
-          },
-          "Railgun": {
-            name: "Railgun",
-            ammoCapacity: 1,
-            ammoCurrent: 1,
-            ammoType: "railgun",
-            magazineCurrent: 3,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [0, 1],
-              walk: [1, .6],
-              shoot: [2, .6],
-              reload: [3, .5],
-              reload_full: [3, .5]
-            }
-          },
-          "Precision-Railgun": {
-            name: "Precision-Railgun",
-            ammoCapacity: 4,
-            ammoCurrent: 4,
-            ammoType: "railgun",
-            magazineCurrent: 2,
-            firingModes: ["semi"],
-            animationStructure: {
-              idle: [0, 1],
-              walk: [1, .5],
-              shoot: [2, .6],
-              reload: [3, .4],
-              reload_full: [3, .4]
-            }
-          },
-        },
-        loadout: ["Precision-Railgun", "..."]
-      };
-
-      if (params().map) {
-        sandbox.map = params().map;
-      } else {
-        sandbox.map = "Cargo_Port";
-      }
-
-      utils = {
-        loadingManager: new THREE.LoadingManager(),
-        cache: {
-          options: {},
-          models: {}
-        },
-        options: {
-          set: function(key, value) {
-            utils.cache.options[key] = value;
-          },
-          get: function(key) {
-            return utils.cache.options[key];
-          },
-          defineWeapon: function(options = {}) {
-            sandbox.weapons.push(options);
-          }
-        },
-        weapons: {
-          playAnimation: function(animation, callback = () => {}) {
-            let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-            if (animation === "idle") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["idle"][0];
-              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["idle"][1];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.timeScale = animationTimeScale;
-              clip.loop = THREE.LoopRepeat;
-              clip.reset();
-              clip.play();
-            }
-            if (animation === "walk") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["walk"][0];
-              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["walk"][1];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.timeScale = animationTimeScale;
-              clip.loop = THREE.LoopPingPong;
-              clip.reset();
-              clip.play();
-            }
-            if (animation === "reload") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["reload"][0];
-              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["reload"][1];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.timeScale = animationTimeScale;
-              clip.loop = THREE.LoopOnce;
-              clip.reset();
-              clip.play();
-            }
-            if (animation === "full-reload") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["reload_full"][0];
-              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["reload_full"][1];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.timeScale = animationTimeScale;
-              clip.loop = THREE.LoopOnce;
-              clip.reset();
-              clip.play();
-            }
-            if (animation === "shoot") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["shoot"][0];
-              let animationTimeScale = sandbox.currentWeapon.alias.animationStructure["shoot"][1];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.timeScale = animationTimeScale;
-              clip.loop = THREE.LoopOnce;
-              clip.reset();
-              clip.play();
-            }
-
-            currentWeapon.mixer.addEventListener("finished", callback);
-          },
-          stopAnimation: function(animation) {
-            let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-            if (animation === "idle") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["idle"][0];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.stop();
-              clip.reset();
-            }
-            if (animation === "walk") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["walk"][0];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.fadeOut(1);
-            }
-            if (animation === "shoot") {
-              let animationIndex = sandbox.currentWeapon.alias.animationStructure["shoot"][0];
-              let clip = currentWeapon.mixer.clipAction(currentWeapon.animations[animationIndex]);
-              clip.stop();
-              clip.reset();
-            }
-
-            // weaponScene.add(sandbox.models[`weapon_${weapon}`].model);
-          },
-          updatePosition: function() {
-            if (sandbox.models[`weapon_${sandbox.loadout[0]}`].loaded/* && sandbox.models[`weapon_${sandbox.loadout[1]}`].loaded*/) {
-              sandbox.primaryWeapon.position.copy(weaponCamera.position);
-              sandbox.primaryWeapon.rotation.copy(weaponCamera.rotation);
-              sandbox.primaryWeapon.rotateY(Math.PI);
-              sandbox.primaryWeapon.rotateZ(.05);
-              sandbox.primaryWeapon.translateX(-.2);
-              sandbox.primaryWeapon.translateY(-.45);
-              sandbox.primaryWeapon.translateZ(.1);
-            }
-          },
-          zoom: function() {
-            if (utils.options.get("Zoomed")) {
-              utils.options.set("Zoomed", false);
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              if (currentWeapon.model.children[0].userData.zoomType === "real") {
-                let zoomRotation = currentWeapon.model.children[0].userData.zoomRotation;
-
-                // Transition the zoom out
-                const startFOV = camera.fov;
-                const endFOV = 60;
-                const duration = currentWeapon.model.children[0].userData.zoomDuration[1];
-                new TWEEN.Tween(currentWeapon.model.children[0].position).to({ x: 0, y: 0, z: 0 }, duration).easing(TWEEN.Easing.Quadratic.InOut).start();
-                new TWEEN.Tween(currentWeapon.model.children[0].rotation).to({ x: -zoomRotation.x, y: -zoomRotation.y, z: -zoomRotation.z }, duration).easing(TWEEN.Easing.Quadratic.InOut).start();
-
-                new TWEEN.Tween(camera).to({ fov: endFOV }, duration).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(() => { camera.updateProjectionMatrix() }).start();
-                new TWEEN.Tween(weaponCamera).to({ fov: endFOV }, duration).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(() => { weaponCamera.updateProjectionMatrix() }).start();
-              }
-            } else {
-              utils.options.set("Zoomed", true);
-              let currentWeapon = sandbox.models[`weapon_${sandbox.primaryWeapon == sandbox.currentWeapon ? sandbox.loadout[0] : sandbox.loadout[1]}`];
-              if (currentWeapon.model.children[0].userData.zoomType === "real") {
-                let zoomPosition = currentWeapon.model.children[0].userData.zoomPosition;
-                let zoomRotation = currentWeapon.model.children[0].userData.zoomRotation;
-
-                // Transition the zoom in
-                const startFOV = camera.fov;
-                const endFOV = currentWeapon.model.children[0].userData.zoomFov;
-                const duration = currentWeapon.model.children[0].userData.zoomDuration[0];
-                new TWEEN.Tween(currentWeapon.model.children[0].position).to({ x: zoomPosition.x, y: zoomPosition.y, z: zoomPosition.z }, duration).easing(TWEEN.Easing.Quadratic.InOut).start();
-                new TWEEN.Tween(currentWeapon.model.children[0].rotation).to({ x: zoomRotation.x, y: zoomRotation.y, z: zoomRotation.z }, duration).easing(TWEEN.Easing.Quadratic.InOut).start();
-
-                new TWEEN.Tween(camera).to({ fov: endFOV }, duration).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(() => { camera.updateProjectionMatrix() }).start();
-                new TWEEN.Tween(weaponCamera).to({ fov: endFOV }, duration).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(() => { weaponCamera.updateProjectionMatrix() }).start();
-              }
-            }
-          },
-          shoot: function(repeat = false, shots = 1, timing = 100) {
-            let reloadDelay = sandbox.currentWeapon.alias.ammoCapacity === 1 ? 200 : null;
-            let shotCount = 0;
-            let shotDelay = 0;
-            let sound = true;
-            function next() {
-              let shotIteration = setInterval(() => {
-                if (shotCount >= shots) return clearInterval(shotIteration);
-                shotCount++;
-
-                let weaponData = sandbox.currentWeapon.children[0].userData;
-                sandbox.currentWeapon.alias.ammoCurrent--;
-                utils.weapons.playAnimation("shoot");
-                if (sandbox.currentWeapon.children[0].userData.boltMoves) {
-                  let bolt = sandbox.currentWeapon.getObjectByName(sandbox.currentWeapon.children[0].userData.boltObject);
-                  let boltLength = sandbox.currentWeapon.children[0].userData.boltLength;
-                  new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: -boltLength }, timing / 4).easing(TWEEN.Easing.Quadratic.InOut).start();
-                  setTimeout(() => {
-                    new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: 0 }, timing / 4).easing(TWEEN.Easing.Quadratic.InOut).start();
-                  }, (timing / 4) + 10);
-                }
-                if (sound) THREE.Sound(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`, false);
-
-                utils.weapons.update();
-                if (sandbox.currentWeapon.alias.ammoCurrent < 1) return utils.weapons.reload(true, reloadDelay), clearInterval(shotIteration);
-              }, timing);
-            }
-            if (sandbox.currentWeapon.alias.ammoType === "railgun") {
-              if (!repeat) {
-                sound = false;
-                THREE.Sound(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`, false);
-                let triggerChecker = setInterval(() => {
-                  if (!shootRapid) clearTimeout(shotDelay), THREE.Sound.stop(`preloaded:shooting_${sandbox.currentWeapon.alias.name}`);;
-                });
-                shots = sandbox.currentWeapon.alias.ammoCapacity;
-                shotDelay = setTimeout(() => (next(), clearInterval(triggerChecker)), 500);
-              }
-            } else {
-              next();
-            }
-          },
-          reload: async function(full, reloadDelay = null) {
-            if (reloadDelay) await plugins.delay(reloadDelay);
-            // Stop the other animations temporarily
-            utils.weapons.stopAnimation("idle");
-            utils.weapons.stopAnimation("shoot");
-
-            // Reset the ammo count
-            sandbox.currentWeapon.alias.ammoCurrent = sandbox.currentWeapon.alias.ammoCapacity;
-
-            // Play the reload animation and sound
-            if (sandbox.currentWeapon.children[0].userData.magMovesOnReload) {
-              let magazine = sandbox.currentWeapon.getObjectByName(sandbox.currentWeapon.children[0].userData.magObject);
-              setTimeout(() => {
-                new TWEEN.Tween(magazine.position).to({ x: 0, y: -10, z: 0 }, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
-                setTimeout(() => {
-                  magazine.position.y = 0;
-                }, sandbox.currentWeapon.children[0].userData.magMoveTimeEnd);
-              }, sandbox.currentWeapon.children[0].userData.magMoveTimeStart);
-            }
-
-            if (full) {
-              utils.weapons.playAnimation("full-reload", () => utils.weapons.playAnimation("idle"));
-              THREE.Sound(`preloaded:reloadingfull_${sandbox.currentWeapon.alias.name}`, false);
-            } else {
-              utils.weapons.playAnimation("reload", () => utils.weapons.playAnimation("idle"));
-              THREE.Sound(`preloaded:reloading_${sandbox.currentWeapon.alias.name}`, false);
-            }
-
-            if (sandbox.currentWeapon.children[0].userData.boltMoves) {
-              setTimeout(() => {
-                let bolt = sandbox.currentWeapon.getObjectByName(sandbox.currentWeapon.children[0].userData.boltObject);
-                let boltLength = sandbox.currentWeapon.children[0].userData.boltLength;
-                new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: -boltLength }, 100).easing(TWEEN.Easing.Quadratic.InOut).start();
-                setTimeout(() => {
-                  new TWEEN.Tween(bolt.position).to({ x: 0, y: 0, z: 0 }, 100).easing(TWEEN.Easing.Quadratic.InOut).start();
-                }, 100);
-              }, (sandbox.currentWeapon.children[0].userData.magMoveTimeStart + sandbox.currentWeapon.children[0].userData.magMoveTimeEnd) + 550);
-            }
-
-          },
-          setPrimary: function(model) {
-            sandbox.primaryWeapon = model;
-            sandbox.primaryWeapon.alias = sandbox.weapons[model.children[0].userData.name.split(".glb")[0]];
-          },
-          setSecondary: function(model) {
-            sandbox.secondaryWeapon = model;
-            sandbox.secondaryWeapon.alias = sandbox.weapons[model.children[0].userData.name.split(".glb")[0]];
-          },
-          setCurrent: function(model) {
-            sandbox.currentWeapon = model;
-            sandbox.currentWeapon.alias = sandbox.weapons[model.children[0].userData.name.split(".glb")[0]];
-          },
-          update: function() {
-            document.querySelector(".weapon-ammo-number").textContent = sandbox.currentWeapon.alias.ammoCurrent;
-            document.querySelector(".weapon-magazine-number").textContent = sandbox.currentWeapon.alias.magazineCurrent;
-          }
-        },
-        camera: {
-          updatePosition: function() {
-            weaponCamera.position.copy(camera.position);
-            weaponCamera.rotation.copy(camera.rotation);
-          }
+      global = {
+        server: "https://hardy-beetle-free.ngrok-free.app",
+        stopSearch: false,
+        lobbyName: null,
+        matchFound: false,
+        wrapperScale: 1,
+        lobbyOptions: {
+          mode: "default",
+          map: "random",
+          teams: "1v1"
         }
       };
 
-      // Load all of the default models
-      utils.loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
-        const progress = itemsLoaded / itemsTotal;
-        // console.log(`Loading file: ${url}, ${(progress * 100).toFixed(2)}% loaded`);
-        if (progress >= 1) {
-          setup();
-        }
-      };
-      Object.keys(sandbox.models).forEach(model => {
-        load(sandbox.models[model].path, function(gltf) {
-          sandbox.models[model].model = gltf.scene;
-          sandbox.models[model].callback(gltf);
-          if (gltf.animations) {
-            sandbox.models[model].animations = gltf.animations;
-            sandbox.models[model].mixer = new THREE.AnimationMixer(gltf.scene);
-          }
-          if (model.startsWith("weapon_") && sandbox.models[model].name === sandbox.loadout[0]) {
-            utils.weapons.setPrimary(sandbox.models[model].model);
-            utils.weapons.setCurrent(sandbox.primaryWeapon);
-            weaponScene.add(sandbox.primaryWeapon);
-            utils.weapons.playAnimation("idle");
-          }
-          if (model.startsWith("weapon_") && sandbox.models[model].name === sandbox.loadout[1]) {
-            sandbox.secondaryWeapon = sandbox.models[model].model;
-          }
-
-          sandbox.models[model].loaded = true;
-        });
-      });
-      async function reloadModel(model) {
-        return new Promise(function(resolve) {
-          new THREE.GLTFLoader().load(sandbox.models[model].path, function(gltf) {
-            let result = {};
-            result.model = gltf.scene;
-            sandbox.models[model].callback(gltf);
-            if (gltf.animations) {
-              result.animations = gltf.animations;
-              result.mixer = new THREE.AnimationMixer(gltf.scene);
-            }
-            resolve(result);
-          });
-        });
-      }
-      
-      // Preload audio files here
-      for (weapon in sandbox.weapons) {
-        THREE.Sound.preload(`shooting_${sandbox.weapons[weapon].name}`, `/sounds/weapons/shooting/${sandbox.weapons[weapon].name}.mp3`);
-        THREE.Sound.preload(`reloading_${sandbox.weapons[weapon].name}`, `/sounds/weapons/reloading/normal.${sandbox.weapons[weapon].name}.mp3`);
-        THREE.Sound.preload(`reloadingfull_${sandbox.weapons[weapon].name}`, `/sounds/weapons/reloading/full.${sandbox.weapons[weapon].name}.mp3`);
-      }
-
-      // Set all default options here
-      utils.options.set("TouchDevice", window.matchMedia("(pointer: coarse)").matches);
-      
-      // Global functions go here
-      function update() {
-        renderer.shadowMap.needsUpdate = true;
-      }
-      function params() {
-        return Object.fromEntries(new URLSearchParams(location.search));
-      }
-      function load(url, callback) {
-        if (Object.keys(utils.cache.models).indexOf(url) > -1) return callback(utils.cache.models[url]);
-        new THREE.GLTFLoader(utils.loadingManager).load(url, function(model) {
-          utils.cache.models[url] = model;
-          callback(model);
-        });
-      }
-      function getForwardVector() {
-        camera.getWorldDirection(playerDirection);
-        playerDirection.y = 0;
-        playerDirection.normalize();
-        return playerDirection;
-      }
-      function getSideVector() {
-        camera.getWorldDirection(playerDirection);
-        playerDirection.y = 0;
-        playerDirection.normalize();
-        playerDirection.cross(camera.up);
-        return playerDirection;
-      }
-      function controls(deltaTime) {
-        const speedDelta = deltaTime;
-        const walkSpeed = deltaTime * (playerOnFloor ? 15 : 2);
-        if (keyStates["KeyW"] || keyStates["ArrowUp"] || keyStates["KeyA"] || keyStates["ArrowLeft"] || keyStates["KeyS"] || keyStates["ArrowDown"] || keyStates["KeyD"] || keyStates["ArrowRight"]) {
-          // Here you can run a function whenever the player walks/moves
-          gametime.run("move", ["fixed", (camera.position.x + "," + camera.position.y + "," + camera.position.z), true, gametime.player.position]);
-        }
-        if (keyStates["KeyW"] || keyStates["ArrowUp"]) {
-          playerVelocity.add(getForwardVector().multiplyScalar(walkSpeed));
-        }
-        if (keyStates["KeyS"] || keyStates["ArrowDown"]) {
-          playerVelocity.add(getForwardVector().multiplyScalar(-walkSpeed));
-        }
-        if (keyStates["KeyA"] || keyStates["ArrowLeft"]) {
-          playerVelocity.add(getSideVector().multiplyScalar(-walkSpeed));
-        }
-        if (keyStates["KeyD"] || keyStates["ArrowRight"]) {
-          playerVelocity.add(getSideVector().multiplyScalar(walkSpeed));
-        }
-        if (playerOnFloor) {
-          if (keyStates["Space"] && allowedToJump) {
-            gametime.run("jump", [gametime.player.position]);
-            allowedToJump = false;
-            playerVelocity.y = 8;
-            setTimeout(() => allowedToJump = true, 1000);
-          }
-        }
-      }
-      function playerCollisions() {
-        const result = worldOctree.capsuleIntersect(playerCollider);
-        playerOnFloor = false;
-        if (result) {
-          playerOnFloor = result.normal.y > 0;
-          if (!playerOnFloor) {
-            playerVelocity.addScaledVector(result.normal, - result.normal.dot(playerVelocity));
-          }
-          playerCollider.translate(result.normal.multiplyScalar(result.depth));
-        }
-      }
-      function updatePlayer(deltaTime) {
-        let damping = Math.exp(-4 * deltaTime) - 1;
-        if (!playerOnFloor) {
-          playerVelocity.y -= GRAVITY * (deltaTime);
-          damping *= 0.1;
-        }
-        playerVelocity.addScaledVector(playerVelocity, damping);
-        const deltaPosition = playerVelocity.clone().multiplyScalar(deltaTime);
-        playerCollider.translate(deltaPosition);
-        playerCollisions();
-        camera.position.copy(playerCollider.end);
-      }
-      function teleportPlayerIfOob() {
-        if (camera.position.y <= -25) {
-          playerCollider.start.set(13.5, 0.35, -18.5);
-          playerCollider.end.set(13.5, 1, -18.5);
-          playerCollider.radius = 0.35;
-          camera.position.copy(playerCollider.end);
-          camera.rotation.set(0, Math.PI, 0);
-        }
-      }
-
-      // Global events go here
       function onWindowResize() {
-        renderer.setViewport(0, 0, (1440 / 2) + 80, (900 / 2) + 50);
-        weaponRenderer.setViewport(0, 0, (1440 / 2) + 80, (900 / 2) + 50);
-
         let averageScale = window.innerHeight / 900;
         let minWidth = 1440 * averageScale;
         if (window.innerWidth < minWidth) {
           // Scale the UI based on the width of window
-          document.querySelector(".ui").style.transform="scale(" + (window.innerWidth/1440) + ")";
+          let wrapperScale = (window.innerWidth / 1440);
+          global.wrapperScale = wrapperScale;
+          document.querySelector(".wrapper").style.transform = `scale(${wrapperScale})`;
+          if (document.querySelector(".swal-modal")) {
+            document.querySelector(".swal-modal").style.scale = wrapperScale * 1.5;
+          }
         } else {
           // Scale the UI based on the height of window
-          document.querySelector(".ui").style.transform="scale(" + (window.innerHeight/900) + ")";
+          let wrapperScale = (window.innerHeight / 900);
+          global.wrapperScale = wrapperScale;
+          document.querySelector(".wrapper").style.transform = `scale(${wrapperScale})`;
+          if (document.querySelector(".swal-modal")) {
+            document.querySelector(".swal-modal").style.scale = wrapperScale * 1.5;
+          }
         }
       }
       window.addEventListener("resize", onWindowResize);
       onWindowResize();
 
-      let globalRepeat = false;
-      let shootRapid = false;
-      document.addEventListener("keydown", (event) => {
-        if (!PointerControls.isLocked) return;
-        keyStates[event.code] = true;
+      function fetchUserData(callback = () => {}) {
+        if (localStorage["loginToken"]) {
+          let loginToken = localStorage["loginToken"];
 
-        if (!event.repeat && !globalRepeat && keyStates["KeyW"] || keyStates["ArrowUp"] || keyStates["KeyA"] || keyStates["ArrowLeft"] || keyStates["KeyS"] || keyStates["ArrowDown"] || keyStates["KeyD"] || keyStates["ArrowRight"]) utils.weapons.playAnimation("walk");
-        if (!event.repeat && keyStates["KeyI"]) utils.weapons.zoom();
+          fetch("https://hardy-beetle-free.ngrok-free.app/account/data", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "ngrok-skip-browser-warning": "69420"
+            },
+            body: JSON.stringify({
+              token: loginToken
+            })
+          }).then(response => response.json()).then(userData => {
+            user.logIn(userData);
+            callback();
 
-        if (keyStates["KeyF"]) shootRapid = true, utils.weapons.shoot(event.repeat);
+            document.querySelector(".wrapper").style.backgroundImage = `url(/images/other/menu/${user.preferences.menuBackground}.png)`;
+          });
 
-        globalRepeat = true;
-      });
+          document.querySelector(".tab[data-tab='account']").textContent = "ACCOUNT";
+        } else {
+          document.querySelector(".tab[data-tab='account']").textContent = "LOG IN";
+        }
+      }
+      fetchUserData();
 
-      document.addEventListener("keyup", (event) => {
-        globalRepeat = false;
-        keyStates[event.code] = false;
+      function menuDialog() {
+        let output = swal.apply(null, arguments);
+        document.querySelector(".swal-modal").style.scale = global.wrapperScale * 1.5;
+        return output;
+      };
 
-        // Since the other players do not receive effects like air resistance, we will update the players' position briefly after they stop walking
-        let updatePosition = setInterval(function() {
-          gametime.run("move", ["fixed", (camera.position.x + "," + camera.position.y + "," + camera.position.z), false, gametime.player.position]);
-        }, 10);
-        setTimeout(function() {
-          clearInterval(updatePosition);
-          gametime.run("halt", [gametime.player.position]);
-        }, 1000);
+      function startSearchForGame(onSuccessCallback, onLobbyFoundCallback) {
+        let lobbyOptions = global.lobbyOptions;
+        
+        function next() {
+          global.lobbyName = lobbyOptions.name;
+          onSuccessCallback();
 
-        if (!(keyStates["KeyW"] || keyStates["ArrowUp"] || keyStates["KeyA"] || keyStates["ArrowLeft"] || keyStates["KeyS"] || keyStates["ArrowDown"] || keyStates["KeyD"] || keyStates["ArrowRight"])) utils.weapons.stopAnimation("walk"), gametime.run("halt", [gametime.player.position]);
-        shootRapid = false;
-      });
+          let search = setInterval(() => {
+            fetch(`${global.server}/lobby/search?options=${btoa(JSON.stringify(lobbyOptions))}`, {
+              headers: {
+                "ngrok-skip-browser-warning": "69420"
+              }
+            }).then(async response => {
+              if (response.status === 200) {
+                let matchingLobbyOptions = await response.json();
 
-      document.addEventListener("mousemove", (event) => {
-        if (!PointerControls.isLocked) return;
-        gametime.run("rotate", [(camera.rotation.x + "," + camera.rotation.y + "," + camera.rotation.z + "," + camera.position.x + "," + camera.position.y + "," + camera.position.z), gametime.player.position]);
-      });
+                onLobbyFoundCallback(matchingLobbyOptions);
 
-      document.addEventListener("touchmove", (event) => {
-        gametime.run("rotate", [(camera.rotation.x + "," + camera.rotation.y + "," + camera.rotation.z + "," + camera.position.x + "," + camera.position.y + "," + camera.position.z), gametime.player.position]);
-      });
+                clearInterval(search);
+                lobbyName = null;
+                lobbyOptions = null;
+                search = null;
+              }
+            });
+          }, 10000);
 
-      document.addEventListener("mousedown", () => {
-        if (document.pointerLockElement != null) return;
-        document.body.requestPointerLock();
-        PointerControls.lock();
-      });
+          let checkSearch = setInterval(function() {
+            if (global.stopSearch) return clearInterval(checkSearch), clearInterval(search), global.stopSearch = false;
+          });
+        }
 
-      document.addEventListener("mouseup", () => {
-        if (!PointerControls.isLocked) return;
-        PointerControls.lock();
-      });
-
-      load(`models/maps/${sandbox.map}.glb`, (model) => {
-        map = model.scene;
-
-        // This can significantly improve performance
-        map.traverse(object => object.frustumCulled = false);
-
-        worldOctree.fromGraphNode(map);
-        scene.add(map);
-        map.traverse(child => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-            if (child.material.map) {
-              child.material.map.anisotropy = 4;
+        let existingLobby = JSON.parse(localStorage["lobby"] || "{}");
+        if (!existingLobby.name || Date.now() - existingLobby.creationDate > (15 * 60 * 1000)) {
+          fetch(`${global.server}/lobby/create?options=${btoa(JSON.stringify(lobbyOptions))}`, {
+            headers: {
+              "ngrok-skip-browser-warning": "69420"
             }
-          }
+          }).then(async response => {
+            if (response.status === 200) {
+              let lobbyName = await response.text();
+              let savedLobby = {
+                name: lobbyName,
+                creationDate: Date.now()
+              };
+              lobbyOptions.name = lobbyName;
+              localStorage.setItem("lobby", JSON.stringify(savedLobby));
+              next();
+            }
+          });
+        } else {
+          lobbyOptions.name = existingLobby.name;
+          next();
+        }
+      }
+
+      function matchFound(lobbyOptions) {
+        if (global.matchFound) return;
+        global.matchFound = true;
+
+        menuDialog({
+          title: "Match found",
+          text: "Connecting all players.",
+          button: false,
+          closeOnEsc: false,
+          closeOnClickOutside: false
         });
 
-        // If the map has any metadata, it will be extracted and used here
-        if (map.children[0] && map.children[0].userData.sky && map.children[0].userData.sky != "none") {
-          new THREE.TextureLoader().load(`/images/other/sky/${map.children[0].userData.sky}.png`, function(texture) {
-            let sky = new THREE.Mesh(new THREE.SphereGeometry(100, 25, 25), new THREE.MeshBasicMaterial({ map: texture, side: THREE.BackSide }));
-            sky.material.side = THREE.BackSide;
-            scene.add(sky);
-          });
-        }
-        if (map.children[0] && map.children[0].userData.lightColor && map.children[0].userData.lightColor != "none") {
-          directionalLight.color = new THREE.Color(map.children[0].userData.lightColor);
-        }
-
-        animate();
-        update();
-        setup();
-      });
-
-      // Game setup goes here (functions that run when the game starts)
-      function setup() {
+        // We'll start the game at a fixed real-world time, so both players are synced
+        let time = Date.now().toString().slice(-4) - 0;
+        let timeUntilStart = time >= 5000 ? 10000 - time : 5000 - time;
+        setTimeout(() => {
+          location.replace(`/src.html?lobby=${lobbyOptions.name}&map=${lobbyOptions.map}&character=${user.preferences.game.character}`);
+        }, timeUntilStart);
       }
-      
-      // Screen controls
-      const PointerControls = new PointerLockControls(camera, renderer.domElement);
-      const TouchControls = new THREE.TouchControls(camera, renderer.domElement);
-      PointerControls.pointerSpeed = 2;
-      PointerControls.isLocked = false;
-      TouchControls.speed = 2;
-      screenControls = [PointerControls, TouchControls];
-      screenControls.forEach(controls => controls.isLocked = true);
 
-      // Here, we'll set up a touch screen UI
-      let repeat = false;
-      let defaultKeys = { code: "ShiftLeft", key: "Shift" };
-      const TouchUI = new UI("touch", function(type, parameters) {
-        if (type == "move") {
-          if (parameters.positive) {
-            if (parameters.where == "forward") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyW", key: "w" }));
-              if (parameters.run) {
-                !defaultKeys.repeat && document.dispatchEvent(new KeyboardEvent("keydown", defaultKeys));
-                defaultKeys.repeat = true;
-              } else {
-                defaultKeys.repeat = false;
-                document.dispatchEvent(new KeyboardEvent("keyup", defaultKeys));
-              }
-            } else if (parameters.where == "forward") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyW", key: "w" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyS", key: "s" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyD", key: "d" }));
-            } else if (parameters.where == "forward-right") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyW", key: "w" })), document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyD", key: "d" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyS", key: "s" }));
-            } else if (parameters.where == "right") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyD", key: "d" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyW", key: "w" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyS", key: "s" }));
-            } else if (parameters.where == "backward-right") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyS", key: "s" })), document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyD", key: "d" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyW", key: "w" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyA", key: "a" }));
-            } else if (parameters.where == "backward") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyS", key: "s" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyW", key: "w" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyD", key: "d" }));
-            } else if (parameters.where == "backward-left") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyS", key: "s" })), document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyW", key: "w" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyD", key: "d" }));
-            } else if (parameters.where == "left") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyW", key: "w" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyS", key: "s" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyD", key: "d" }));
-            } else if (parameters.where == "forward-left") {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyW", key: "w" })), document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyA", key: "a" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyS", key: "s" }));
-              document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyD", key: "d" }));
-            }
-          } else {
-            defaultKeys.repeat = false;
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyW", key: "w" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyA", key: "a" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyS", key: "s" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyD", key: "d" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "ShiftLeft", key: "Shift" }));
-          }
-        } else if (type == "jump") {
-          if (parameters.positive) {
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "Space", key: " " }));
-          } else {
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "Space", key: " " }));
-          }
-        } else if (type == "shoot") {
-          if (parameters.positive) {
-            utils.options.get("Zoomed") || document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyI", key: "i" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyI", key: "i" }));
-            setTimeout(() => {
-              document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyF", key: "f" }));
-            }, 100);
-          } else {
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyF", key: "f" }));
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyI", key: "i" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyI", key: "i" }));
-            keyStates["KeyF"] = false;
-            keyStates["KeyI"] = false;
-          }
-        } else if (type == "fire") {
-          if (parameters.positive) {
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyF", key: "f" }));
-          } else {
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyF", key: "f" }));
-            keyStates["KeyF"] = false;
-          }
-        } else if (type == "zoom") {
-          if (parameters.positive) {
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyI", key: "i" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyI", key: "i" }));
-          }
-        } else if (type == "reload") {
-          utils.weapons.data(sandbox.currentWeapon).then(x => {
-            let weapon = x;
-            let cweapon = sandbox.weapons[sandbox.weapons.indexOf(weapon)];
-            if (cweapon.rounds < cweapon.maxRounds) {
-              utils.weapons.reload();
-            }
+      function subMenuAction(button) {
+        let action = button.dataset.action;
+        if (action === "search-game") {
+          startSearchForGame(function() {
+            menuDialog({
+              title: "Searching for game",
+              text: "Please wait. We will search for a matching game and connect you to it automatically if we find one.",
+              button: "Cancel",
+              closeOnEsc: false,
+              closeOnClickOutside: false
+            }).then(function() {
+              global.stopSearch = true;
+            });
+          }, function(lobbyOptions) {
+            matchFound(lobbyOptions);
+            gametime.run("decideLobbyName", [lobbyOptions]);
           });
-        } else if (type == "throw") {
-          if (parameters.positive) {
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyM", key: "m" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyM", key: "m" }));
+        } if (action === "game-presets") {
+          if (document.querySelector(".game-preset-wrapper").classList.contains("dropdown")) {
+            document.querySelector(".game-preset-wrapper").classList.remove("dropdown");
+            document.querySelector(".game-preset-wrapper").innerHTML = "";
+          } else {
+            document.querySelector(".game-preset-wrapper").classList.add("dropdown");
+            document.querySelector(".game-preset-wrapper").innerHTML = `
+            <p class="option-header">Game mode:</p>
+            <select class="select select-game-mode" value="default" onchange="global.lobbyOptions.mode = this.value, externalAction('menu:generatedescription')">
+              <option value="default" selected>Default</option>
+              <option value="fiesta">Fiesta</option>
+              <option value="snipers">Snipers</option>
+            </select>
+            <p class="option-header">Map:</p>
+            <select class="select select-game-map" value="random" onchange="global.lobbyOptions.map = this.value, externalAction('menu:generatedescription')">
+              <option value="random" selected>random</option>
+              <option value="Cargo_Port">Cargo Port</option>
+              <option value="Breakthrough">Breakthrough</option>
+              <option value="Lihid">Lihid</option>
+              <option value="Ghost_Town">Ghost Town</option>
+              <option value="Abandoned_City">Abandoned City</option>
+            </select>
+            <p class="option-header">Team size:</p>
+            <select class="select select-game-teams" value="1v1" onchange="global.lobbyOptions.teams = this.value, externalAction('menu:generatedescription')">
+              <option value="1v1" selected>1v1</option>
+              <option value="2v2">2v2</option>
+            </select>
+
+            <p class="game-preset-description">A basic 1v1 game with chosen loadouts + map weapons, and a random map.</p>
+            `;
+
+            document.querySelector(".select.select-game-mode").value = global.lobbyOptions.mode;
+            document.querySelector(`.select.select-game-mode option[selected]`).selected = "";
+            document.querySelector(`.select.select-game-mode option[value="${global.lobbyOptions.mode}"]`).selected = "selected";
+
+            document.querySelector(".select.select-game-map").value = global.lobbyOptions.map;
+            document.querySelector(`.select.select-game-map option[selected]`).selected = "";
+            document.querySelector(`.select.select-game-map option[value="${global.lobbyOptions.map}"]`).selected = "selected";
+
+            document.querySelector(".select.select-game-teams").value = global.lobbyOptions.teams;
+            document.querySelector(`.select.select-game-teams option[selected]`).selected = "";
+            document.querySelector(`.select.select-game-teams option[value="${global.lobbyOptions.teams}"]`).selected = "selected";
+
+            externalAction("menu:generatedescription");
           }
-        } else if (type == "melee") {
-          if (parameters.positive) {
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyB", key: "b" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyB", key: "b" }));
-          }
-        } else if (type == "swap") {
-          if (parameters.positive) {
-            document.dispatchEvent(new KeyboardEvent("keydown", { code: "KeyY", key: "y" }));
-            document.dispatchEvent(new KeyboardEvent("keyup", { code: "KeyY", key: "y" }));
+        } else if (action === "custom-lan-server") {
+          let content = document.createElement("div");
+          content.innerHTML = `
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          e<br>
+          `;
+          menuDialog({
+            title: "Run your own FPS-X server",
+            content: content,
+            button: "Close",
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+
+          document.querySelector(".swal-content").classList.add("scrollable");
+        }
+      }
+
+      function selectTab(button) {
+        let tab = button.dataset.tab;
+        document.querySelector(".tab.selected").classList.remove("selected");
+        button.classList.add("selected");
+
+        if (tab === "play") {
+          let content = `
+          <div class="sub-menu">
+            <div class="item" onclick="subMenuAction(this)" data-action="search-game">SEARCH FOR GAME</div>
+            <div class="item" onclick="subMenuAction(this)" data-action="game-presets">GAME PRESETS</div>
+            <div class="game-preset-wrapper"></div>
+            <div class="item" onclick="subMenuAction(this)" data-action="custom-lan-server">CUSTOM LAN SERVER</div>
+            <div class="item" onclick="subMenuAction(this)" data-action="help">HELP</div>
+          </div>
+          `;
+
+          document.querySelector(".content").innerHTML = content;
+        }
+        if (tab === "options") {
+          let primaryWeapons = ["AK-74", "M16", "AR-15", "SCAR-H", "MK-14", "SKS"];
+          let secondaryWeapons = ["FN-502", "Glock-19", "XD-Mod-2", "Desert-Eagle"];
+
+          let content = document.createElement("div");
+          content.innerHTML = `
+          <div class="options-wrapper">
+            <div class="weapon-selection-wrapper">
+              <p class="options-header-main">Loadout</p>
+              <p class="weapon-selection-header">Primary weapon</p>
+              <div class="primary-weapon-selection"></div>
+
+              <p class="weapon-selection-header">Secondary weapon</p>
+              <div class="secondary-weapon-selection"></div>
+            </div>
+
+            <div class="look-sensitivity-wrapper">
+              <p class="options-header-main">Look sensitivity</p>
+              <p class="look-sensitivity-header">Mouse pointer speed</p>
+              <div class="custom-slider look-sensitivity-slider" data-type="pointer">
+                <div class="slider-track"></div>
+                <div class="slider-thumb"></div>
+              </div>
+              <span id="pointer-speed-value-text" data-type="pointer">2.0</span>
+              <br>
+              <p class="look-sensitivity-header">Gamepad joystick speed</p>
+              <div class="custom-slider look-sensitivity-slider" data-type="gamepad">
+                <div class="slider-track"></div>
+                <div class="slider-thumb"></div>
+              </div>
+              <span id="pointer-speed-value-text" data-type="gamepad">1.0</span>
+              <br>
+              <p class="look-sensitivity-header">Touch screen speed</p>
+              <div class="custom-slider look-sensitivity-slider" data-type="touch">
+                <div class="slider-track"></div>
+                <div class="slider-thumb"></div>
+              </div>
+              <span id="pointer-speed-value-text" data-type="touch">2.0</span>
+            </div>
+
+            <div class="controls-binding-wrapper">
+              <p class="options-header-main">Controller bindings</p>
+              <button class="button controls-binding-button" onclick="externalAction('menu:controlsbinding_key')">Key bindings</button>
+              <button class="button controls-binding-button" onclick="externalAction('menu:controlsbinding_gamepad')">Gamepad bindings</button>
+            </div>
+          </div>
+          `;
+
+          primaryWeapons.forEach(weapon => {
+            content.querySelector(".primary-weapon-selection").innerHTML += `
+            <div class="weapon-select" data-weapon="${weapon}" onclick="externalAction('setprimaryweapon:${weapon}')">
+              <img class="weapon-select-image" src="/images/other/weapons/${weapon}.png">
+              <p class="weapon-select-title">${weapon}</p>
+            </div>
+            `;
+          });
+          secondaryWeapons.forEach(weapon => {
+            content.querySelector(".secondary-weapon-selection").innerHTML += `
+            <div class="weapon-select" data-weapon="${weapon}" onclick="externalAction('setsecondaryweapon:${weapon}')">
+              <img class="weapon-select-image" src="/images/other/weapons/${weapon}.png">
+              <p class="weapon-select-title">${weapon}</p>
+            </div>
+            `;
+          });
+          content.querySelector(`.primary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[0]}"]`).classList.add("selected");
+          content.querySelector(`.secondary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[1]}"]`).classList.add("selected");
+
+          document.querySelector(".content").innerHTML = content.innerHTML;
+
+          let lookSensitivity = {
+            "pointer": user.preferences.game.mouseSpeed,
+            "gamepad": user.preferences.game.gamepadSpeed,
+            "touch": user.preferences.game.touchSpeed
+          };
+          document.querySelectorAll(".look-sensitivity-slider").forEach(sliderElement => {
+            let value = lookSensitivity[sliderElement.dataset.type];
+            let slider = new CustomSlider(sliderElement, {
+              min: 1,
+              max: 20,
+              value: value * 2,
+              onchange: async (value) => {
+                let sensitivity = (Math.round(value) / 2).toFixed(1);
+                let sensitivityValue = sensitivity - 0;
+                document.querySelector(`#pointer-speed-value-text[data-type="${sliderElement.dataset.type}"]`).textContent = sensitivity;
+              },
+              onfinish: async (value) => {
+                let sensitivity = (Math.round(value) / 2).toFixed(1);
+                let sensitivityValue = sensitivity - 0;
+                if (sliderElement.dataset.type === "pointer") {
+                  user.set("game.mouseSpeed", sensitivityValue);
+                } else if (sliderElement.dataset.type === "gamepad") {
+                  user.set("game.gamepadSpeed", sensitivityValue);
+                } else if (sliderElement.dataset.type === "touch") {
+                  user.set("game.touchSpeed", sensitivityValue);
+                }
+              }
+            });
+            slider.onchange(lookSensitivity[sliderElement.dataset.type] * 2);
+          });
+        }
+        if (tab === "account") {
+          let content = document.createElement("div");
+
+          if (!localStorage["loginToken"]) {
+            content.innerHTML = `
+            <div class="account-wrapper">
+              <p class="options-header-main">Log in</p>
+              <p class="account-header">Email/Username</p>
+              <input type="text" class="input login-input email" placeholder="email@example.com">
+              <br>
+              <p class="account-header">Password</p>
+              <input type="password" class="input login-input password"> <button class="login-input submit" onclick="externalAction('account:login')"><i class="fa fa-arrow-right"></i></button>
+              <br>
+              <p class="account-link" onclick="externalAction('redirect:signup')">Sign up instead</p><span style="margin: 20px"></span><p class="account-link" onclick="externalAction('account:passwordreset')">Reset your password</p>
+            </div>
+            `;
+
+            document.querySelector(".content").innerHTML = content.innerHTML;
+          } else {
+            content.innerHTML = `
+            <div class="account-wrapper">
+              <p class="options-header-main">Your account</p>
+              <p class="account-header">Email</p>
+              <input type="text" class="input login-input readonly-email" placeholder="email@example.com" readonly value="${user.email}">
+              <br>
+              <p class="account-header">Username</p>
+              <input type="text" class="input login-input readonly-username" value="${user.username}" onfocus="this.classList.add('edit')" onblur="event.relatedTarget !== this.nextElementSibling && this.classList.remove('edit')"> <button class="login-input submit" onclick="externalAction('account:changeusername'), this.previousElementSibling.focus(), this.previousElementSibling.blur()"><i class="fa fa-check"></i></button>
+              <br>
+              <p class="account-header">Menu background</p>
+              <select class="select menu-background" value="0" onchange="externalAction('account:changebackground')">
+                <option value="0" selected>0 (default)</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+              <br>
+              <p class="options-header-main">Other options</p>
+              <button class="logout" onclick="externalAction('account:logout')">Log out</button>
+              <br>
+              <button class="logout" onclick="externalAction('account:passwordreset')">Reset password</button>
+            </div>
+            `;
+
+            document.querySelector(".content").innerHTML = content.innerHTML;
+            document.querySelector(`.select.menu-background option[selected]`).selected = "";
+            document.querySelector(`.select.menu-background option[value="${user.preferences.menuBackground}"]`).selected = "selected";
           }
         }
-      });
-      if (utils.options.get("TouchDevice")) document.body.appendChild(TouchUI.domElement);
+      }
+
+      function externalAction(action) {
+        let feature = action.split(":")[0];
+        let type = action.split(":")[1];
+
+        if (feature === "setprimaryweapon") {
+          let loadout = user.preferences.game.loadout;
+          loadout[0] = type;
+          user.set("game.loadout", loadout);
+
+          document.querySelector(`.primary-weapon-selection .weapon-select.selected`).classList.remove("selected");
+          document.querySelector(`.primary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[0]}"]`).classList.add("selected");
+        }
+        if (feature === "setsecondaryweapon") {
+          let loadout = user.preferences.game.loadout;
+          loadout[1] = type;
+          user.set("game.loadout", loadout);
+
+          document.querySelector(`.secondary-weapon-selection .weapon-select.selected`).classList.remove("selected");
+          document.querySelector(`.secondary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[1]}"]`).classList.add("selected");
+        }
+        if (feature === "account") {
+          if (type === "login") {
+            let email = document.querySelector(".login-input.email").value.trim();
+            let password = document.querySelector(".login-input.password").value;
+
+            fetch(`${global.server}/account/login`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "69420"
+              },
+              body: JSON.stringify({
+                email: email,
+                password: password
+              })
+            }).then(async response => {
+              function error(code) {
+                if (code === 422) {
+                  menuDialog({
+                    text: `Error: Your email, username or password is incorrect.`,
+                    button: "Close",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                  });
+                } else {
+                  menuDialog({
+                    text: `Error: An unknown error occurred. (code: ${code})`,
+                    button: "Close",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                  });
+                }
+              }
+              if (response.status === 200) {
+                let loginToken = await response.text();
+                if (loginToken && loginToken.length === 16) {
+                  localStorage.setItem("loginToken", loginToken);
+                  selectTab(document.querySelector(".tab[data-tab='play']"));
+                  fetchUserData(function() {
+                    //notification(`Welcome back, ${user.username}!`);
+                  });
+                } else {
+                  error();
+                }
+              } else {
+                error(response.status);
+              }
+            });
+          }
+          if (type === "signup") {
+            let email = document.querySelector(".login-input.email").value;
+            let username = document.querySelector(".login-input.username").value;
+            let password = document.querySelector(".login-input.password").value;
+
+            let emailTestRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+            function error(code) {
+              if (typeof email !== "string" || email.length >= 100 || !emailTestRegex.test(email)) {
+                menuDialog({
+                  text: `Error: Please enter a valid email address. Email must be shorter than 100 characters and have a valid email provider.`,
+                  button: "Close",
+                  closeOnEsc: false,
+                  closeOnClickOutside: false
+                });
+              } else if (typeof password !== "string" || password.length >= 50 || password.length < 8) {
+                menuDialog({
+                  text: `Error: Please enter a valid password. Password must be longer than 8 characters and shorter than 50 characters.`,
+                  button: "Close",
+                  closeOnEsc: false,
+                  closeOnClickOutside: false
+                });
+              } else if (typeof username !== "string" || username.length >= 30 || username.length < 3 || !/[a-zA-Z0-9_-]/.test(username)) {
+                menuDialog({
+                  text: `Error: Please enter a valid username. Your password must be longer than 3 characters, shorter than 30 characters, and only contain letters, numbers, underscores, and dashes.`,
+                  button: "Close",
+                  closeOnEsc: false,
+                  closeOnClickOutside: false
+                });
+              } else {
+                menuDialog({
+                  text: `Error: An unknown error occurred. (code: ${code})`,
+                  button: "Close",
+                  closeOnEsc: false,
+                  closeOnClickOutside: false
+                });
+              }
+            }
+
+            if (typeof email === "string" && typeof username === "string" && typeof password === "string" && email.length < 100 && username.length < 30 && username.length >= 3 && password.length < 50 && password.length >= 8 && emailTestRegex.test(email) && /[a-zA-Z0-9_-]/.test(username)) {
+              fetch("https://hardy-beetle-free.ngrok-free.app/account/signup", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "ngrok-skip-browser-warning": "69420"
+                },
+                body: JSON.stringify({
+                  email: email,
+                  username: username,
+                  password: password,
+                  url: `${location.protocol}//${location.host}/verify.html`
+                })
+              }).then(response => {
+                if (response.status === 200) {
+                  menuDialog({
+                    text: `We have sent a verification email to ${email}. If this is you, click the link inside the email to complete the signup process, then you can log in.`,
+                    button: "Close",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                  });
+                  externalAction("redirect:login");
+                } else {
+                  error(response.status);
+                }
+              });
+            } else {
+              error();
+            }
+          }
+          if (type === "passwordreset") {
+            if (localStorage["loginToken"]) {
+              fetch("https://hardy-beetle-free.ngrok-free.app/account/passwordreset", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "ngrok-skip-browser-warning": "69420"
+                },
+                body: JSON.stringify({
+                  email: user.email,
+                  url: `${location.protocol}//${location.host}`
+                })
+              });
+              menuDialog({
+                text: `We just sent a Password Reset email to ${user.email}. Click the link in the email then create your new password.`,
+                button: "Close",
+                closeOnEsc: false,
+                closeOnClickOutside: false
+              });
+            } else {
+              menuDialog({
+                text: "Enter the email address below that you signed up with:",
+                content: "input",
+                button: "Next"
+              }).then(email => {
+                let emailTestRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+                if (email && emailTestRegex.test(email)) {
+                  fetch("https://hardy-beetle-free.ngrok-free.app/account/passwordreset", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "ngrok-skip-browser-warning": "69420"
+                    },
+                    body: JSON.stringify({
+                      email: email,
+                      url: `${location.protocol}//${location.host}`
+                    })
+                  });
+                  menuDialog({
+                    text: `We just sent a Password Reset email to ${email}. If this is you, click the link in the email then create your new password.`,
+                    button: "Close",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                  });
+                } else {
+                  if (!email || !email.trim()) return;
+                  menuDialog({
+                    text: `Error: Invalid email address.`,
+                    button: "Close",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false
+                  });
+                }
+              })
+            }
+          }
+          if (type === "logout") {
+            let loginToken = localStorage["loginToken"];
+            fetch(`${global.server}/account/logout`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": "69420"
+              },
+              body: JSON.stringify({
+                token: loginToken
+              })
+            }).then(() => {
+              user.logOut();
+              selectTab(document.querySelector(".tab[data-tab='play']"));
+              fetchUserData();
+              //notification("successfully logged out")
+            });
+          }
+          if (type === "changeusername") {
+            user.set("root:username", document.querySelector(".readonly-username").value);
+          }
+          if (type === "changebackground") {
+            user.set("menuBackground", document.querySelector(".select.menu-background").value);
+            document.querySelector(".wrapper").style.backgroundImage = `url(/images/other/menu/${user.preferences.menuBackground}.png)`;
+          }
+        }
+        if (feature === "redirect") {
+          let content = document.createElement("div");
+          if (type === "signup") {
+            content.innerHTML = `
+            <div class="account-wrapper">
+              <p class="options-header-main">Sign up</p>
+              <p class="account-header">Email</p>
+              <input type="text" class="input login-input email" placeholder="email@example.com">
+              <br>
+              <p class="account-header">Username</p>
+              <p class="account-subheader">(between 3-30 characters)</p>
+              <input type="text" class="input login-input username">
+              <p class="account-header">Password</p>
+              <p class="account-subheader">(between 8-50 characters)</p>
+              <input type="password" class="input login-input password"> <button class="login-input submit" onclick="externalAction('account:signup')"><i class="fa fa-arrow-right"></i></button>
+              <br>
+              <p class="account-link" onclick="externalAction('redirect:login')">Log in instead</p>
+            </div>
+            `;
+
+            document.querySelector(".content").innerHTML = content.innerHTML;
+          }
+          if (type === "login") {
+            selectTab(document.querySelector(".tab[data-tab='account']"));
+          }
+        }
+        if (feature === "menu") {
+          if (type === "generatedescription") {
+            document.querySelector(".game-preset-description").textContent = generateGameDescription();
+          }
+          if (type === "controlsbinding_key") {
+            let content = document.createElement("div");
+            content.innerHTML = `
+            <p class="controls-binding-header">Walk forward:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="walkforward" data-key="KeyW">w</div>
+            <p class="controls-binding-header">Walk left:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="walkleft" data-key="KeyA">a</div>
+            <p class="controls-binding-header">Walk backward:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="walkbackward" data-key="KeyS">s</div>
+            <p class="controls-binding-header">Walk right:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="walkright" data-key="KeyD">d</div>
+            <p class="controls-binding-header">Fire weapon:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="shoot" data-key="KeyF">f</div>
+            <p class="controls-binding-header">Reload weapon:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="reload" data-key="KeyR">r</div>
+            <p class="controls-binding-header">Toggle weapon zoom:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="zoom" data-key="KeyI">i</div>
+            <p class="controls-binding-header">Melee:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="melee" data-key="KeyB">b</div>
+            <p class="controls-binding-header">Switch weapon:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="switchweapon" data-key="KeyY">y</div>
+            <p class="controls-binding-header">Throw grenade:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="throwgrenade" data-key="KeyG">g</div>
+            <p class="controls-binding-header">Interact/Pick up:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="interact" data-key="KeyE">e</div>
+            <p class="controls-binding-header">Jump:</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="jump" data-key="Space">Space</div>
+            <p class="controls-binding-header">Sprint (hold):</p> <div class="controls-binding-box" onclick="setKeyBinding(this)" data-binding="sprint" data-key="ShiftLeft">ShiftLeft</div>
+            <br>
+            <p class="controls-binding-header error-message"></p>
+            `;
+            menuDialog({
+              title: "Customize key bindings",
+              content: content,
+              button: "Close",
+              closeOnEsc: false,
+              closeOnClickOutside: false
+            });
+
+            document.querySelectorAll(".controls-binding-box").forEach(element => {
+              function getCode(key) {
+                return ((key.split("Key")[1] && key.split("Key")[1].length) === 1 ? key.split("Key")[1].toLowerCase() : key);
+              }
+              element.dataset.key = user.preferences.game.keyBindings[element.dataset.binding];
+              element.textContent = getCode(user.preferences.game.keyBindings[element.dataset.binding]);
+            });
+          }
+          if (type === "controlsbinding_gamepad") {
+            let content = document.createElement("div");
+            content.innerHTML = `
+            <p class="controls-binding-header">Fire weapon:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="shoot" data-key="RT">(RT)</div>
+            <p class="controls-binding-header">Reload weapon:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="reload" data-key="RB">(RB)</div>
+            <p class="controls-binding-header">Toggle weapon zoom:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="zoom" data-key="R">(R)</div>
+            <p class="controls-binding-header">Melee:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="melee" data-key="B">(B)</div>
+            <p class="controls-binding-header">Switch weapon:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="switchweapon" data-key="Y">(Y)</div>
+            <p class="controls-binding-header">Throw grenade:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="throwgrenade" data-key="LT">(LT)</div>
+            <p class="controls-binding-header">Interact/Pick up (hold):</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="interact" data-key="RB">(RB)</div>
+            <p class="controls-binding-header">Jump:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="jump" data-key="A">(A)</div>
+            <p class="controls-binding-header">Sprint:</p> <div class="controls-binding-box" onclick="setGamepadBinding(this)" data-binding="sprint" data-key="X">(X)</div>
+            <br>
+            <p class="controls-binding-header error-message"></p>
+            `;
+            menuDialog({
+              title: "Customize gamepad button bindings",
+              content: content,
+              button: "Save",
+              closeOnEsc: false,
+              closeOnClickOutside: false
+            });
+
+            document.querySelectorAll(".controls-binding-box").forEach(element => {
+              function getName(button) {
+                return `(${button.toUpperCase()})`;
+              }
+              element.dataset.key = user.preferences.game.gamepadBindings[element.dataset.binding];
+              element.textContent = getName(user.preferences.game.gamepadBindings[element.dataset.binding]);
+            })
+          }
+        }
+      }
+
+      let requestedMessage = new URLSearchParams(location.search).get("m");
+      let passwordReset = new URLSearchParams(location.search).get("resetpassword");
+      if (requestedMessage) {
+        if (requestedMessage == 0) {
+          externalAction("redirect:login");
+          menuDialog({
+            text: "You have been verified and your account has successfully beeen added. Please log in to continue.",
+            button: "Close",
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        }
+        if (requestedMessage == 1) {
+          menuDialog({
+            text: "Sorry, there was an error adding your account. Make sure that the verification link didn't expire and that you entered the correct information during signup.",
+            button: "Close",
+            closeOnEsc: false,
+            closeOnClickOutside: false
+          });
+        }
+      }
+      if (passwordReset) {
+        function next() {
+          menuDialog({
+            text: "Enter your new password:",
+            content: "input",
+            button: "Next"
+          }).then(password => {
+            let params = new URLSearchParams(location.search);
+            fetch(`https://hardy-beetle-free.ngrok-free.app/account/passwordreset/reset?v=${params.get("v")}&email=${params.get("email")}&password=${password}`, {
+              headers: {
+                "ngrok-skip-browser-warning": "69420"
+              }
+            }).then(response => {
+              if (response.status === 200) {
+                externalAction("redirect:login");
+                //notification("Your password was successfully reset.");
+              } else {
+                menuDialog({
+                  text: "Error: There was an error resetting your password. Make sure the link you clicked has not expired, your new password is valid, and that your account exists.",
+                  buttons: ["Close", "Try again"]
+                }).then(e => {
+                  if (e) next();
+                });
+              }
+            });
+          });
+
+          document.querySelector(".swal-content__input").type = "password";
+        }
+        next();
+      }
+
+      function generateGameDescription() {
+        let modeDescriptions = {
+          "default": "chosen loadouts + map weapons",
+          "fiesta": "completely random loadouts",
+          "snipers": "sniper-only loadouts + extra stealth",
+        };
+        let mapDescriptions = {
+          "random": "a random map",
+          "Cargo_Port": "the Cargo Port map",
+          "Breakthrough": "the Breakthrough map",
+          "Lihid": "in the Lihid desert map",
+          "Ghost_Town": "in a Ghost Town",
+          "Abandoned_City": "an Abandoned City map",
+        };
+        let teamsDescriptions = {
+          "1v1": "basic 1v1",
+          "2v2": "2-player team",
+        };
+
+        const mode = modeDescriptions[global.lobbyOptions.mode];
+        const map = mapDescriptions[global.lobbyOptions.map];
+        const teams = teamsDescriptions[global.lobbyOptions.teams];
+
+        let result = `A ${teams} game with ${mode}, and ${map}.`;
+
+        return result;
+      }
+
+      let currentBindings = JSON.parse(JSON.stringify(user.preferences.game.keyBindings));
+      let currentGamepadBindings = JSON.parse(JSON.stringify(user.preferences.game.gamepadBindings));
+      function setKeyBinding(element) {
+        element.style.width = "100px";
+        element.style.color = "#ddd";
+        element.textContent = "Click a key...";
+
+        document.onkeydown = function(event) {
+          let key;
+          if (event.code === "ShiftLeft" || event.code === "Space") {
+            key = event.code;
+          } else {
+            key = event.key;
+          }
+
+          element.style.color = "";
+          element.style.width = "";
+          element.textContent = key;
+
+          // Remove other bindings with this same key
+          let binding = element.dataset.binding;
+          let oldBinding = Object.keys(user.preferences.game.keyBindings)[Object.values(user.preferences.game.keyBindings).indexOf(event.code)];
+
+          if (oldBinding && oldBinding !== binding) {
+            if (document.querySelector(`.controls-binding-box[data-key="${event.code}"]`)) {
+              document.querySelector(`.controls-binding-box[data-key="${event.code}"]`).innerHTML = "&nbsp;";
+              document.querySelector(`.controls-binding-box[data-key="${event.code}"]`).dataset.key = "";
+            }
+            currentBindings[oldBinding] = null;
+          }
+          currentBindings[binding] = event.code;
+
+          element.dataset.key = event.code;
+
+          if (!Object.values(currentBindings).includes(null)) {
+            user.set("game.keyBindings", currentBindings);
+            currentBindings = user.preferences.game.keyBindings;
+            document.querySelector(".controls-binding-header.error-message").textContent = "";
+          } else {
+            currentBindings = user.preferences.game.keyBindings;
+            document.querySelector(".controls-binding-header.error-message").textContent = "Error: One (or more) of your key bindings was left unset. Your changes will not be saved until all bindings are properly mapped to a key.";
+          }
+
+          document.onkeydown = null;
+        };
+      }
+      async function setGamepadBinding(element) {
+        function getName(button) {
+          return `(${button.toUpperCase()})`;
+        }
+
+        element.style.width = "100px";
+        element.style.color = "#ddd";
+        element.textContent = "Click a button...";
+
+        await plugins.delay(200);
+        GamepadControls.buttonEvent = function(key) {
+          element.style.color = "";
+          element.style.width = "";
+          element.textContent = getName(key);
+
+          // Remove other bindings with this same key
+          let binding = element.dataset.binding;
+          let oldBinding = Object.keys(user.preferences.game.gamepadBindings)[Object.values(user.preferences.game.gamepadBindings).indexOf(key)];
+
+          if (oldBinding && oldBinding !== binding && binding !== "interact") {
+            if (document.querySelector(`.controls-binding-box[data-key="${key}"]`)) {
+              document.querySelector(`.controls-binding-box[data-key="${key}"]`).innerHTML = "&nbsp;";
+              document.querySelector(`.controls-binding-box[data-key="${key}"]`).dataset.key = "";
+            }
+            currentGamepadBindings[oldBinding] = null;
+          }
+          currentGamepadBindings[binding] = key;
+
+          element.dataset.key = key;
+
+          if (!Object.values(currentGamepadBindings).includes(null)) {
+            user.set("game.gamepadBindings", currentGamepadBindings);
+            currentGamepadBindings = user.preferences.game.gamepadBindings;
+            document.querySelector(".controls-binding-header.error-message").textContent = "";
+          } else {
+            currentGamepadBindings = user.preferences.game.gamepadBindings;
+            document.querySelector(".controls-binding-header.error-message").textContent = "Error: One (or more) of your key bindings was left unset. Your changes will not be saved until all bindings are properly mapped to a key.";
+          }
+
+          GamepadControls.buttonEvent = () => {};
+        };
+      }
     </script>
   </body>
 </html>
