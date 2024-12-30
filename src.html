@@ -659,7 +659,7 @@
           utils.player.animations.play(playerObject, "rifle_idle");
 
           let character = params().character || "SWAT";
-          gametime.run("join", [gametime.player.position, gametime.player.uuid, "SWAT", sandbox.username, character]);
+          gametime.run("join", [gametime.player.position, gametime.player.uuid, character, sandbox.username]);
         });
 
         // All multiplayer functions go here
@@ -1123,7 +1123,7 @@
           scoreLimit: 100,
           animationSpeed: 1
         },
-        username: generateName(),
+        username: user.username || generateName(),
         map: null,
         primaryWeapon: null,
         secondaryWeapon: null,
@@ -3558,37 +3558,69 @@
             return isInView;
           },
           shake: async function(intensity = 1, duration = 50, repeat = false, defaultFov = 60) {
+            const MAX_ROTATION_X = Math.PI / 2;
+          
             async function next(repeat = false) {
               if (utils.options.get("CancelCameraShake")) return utils.options.set("CancelCameraShake", false);
               if (utils.options.get("CameraShaking")) return;
               utils.options.set("CameraShaking", true);
-
+          
               let outFov = defaultFov + intensity;
               let inFov = defaultFov;
               let rotationX = 0.01 * intensity;
               let rotationY = 0.005 * intensity;
-
+          
               new TWEEN.Tween(camera).to({ fov: outFov }, duration).easing(TWEEN.Easing.Quadratic.InOut).start().onUpdate(function() {
-                camera.rotateX(rotationX);
-                camera.rotateY(rotationY);
+                // Store the current z-rotation
+                const currentZRotation = camera.rotation.z;
+          
+                // Create quaternions for x and y rotations
+                const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), rotationX);
+                const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), rotationY);
+          
+                // Combine rotations
+                const combinedRotation = qx.multiply(qy);
+          
+                // Apply the combined rotation to the camera's quaternion
+                camera.quaternion.premultiply(combinedRotation);
+          
+                // Clamp the x-rotation
+                const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
+                euler.x = Math.max(-MAX_ROTATION_X, Math.min(MAX_ROTATION_X, euler.x));
+          
+                // Set the camera's quaternion from the clamped euler angles, preserving z-rotation
+                camera.quaternion.setFromEuler(euler);
+                camera.rotation.z = currentZRotation;
+          
                 camera.updateProjectionMatrix();
               });
-
+          
               await plugins.delay(duration);
-
+          
               new TWEEN.Tween(camera).to({ fov: inFov }, duration).easing(TWEEN.Easing.Quadratic.InOut).start().onUpdate(function() {
-                camera.rotateX(-rotationX);
-                camera.rotateY(-rotationY);
+                // Repeat the process for the reverse motion
+                const currentZRotation = camera.rotation.z;
+                const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -rotationX);
+                const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -rotationY);
+                const combinedRotation = qx.multiply(qy);
+                camera.quaternion.premultiply(combinedRotation);
+          
+                const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
+                euler.x = Math.max(-MAX_ROTATION_X, Math.min(MAX_ROTATION_X, euler.x));
+          
+                camera.quaternion.setFromEuler(euler);
+                camera.rotation.z = currentZRotation;
+          
                 camera.updateProjectionMatrix();
               });
-
+          
               await plugins.delay(duration);
-
+          
               utils.options.set("CameraShaking", false);
-
+          
               if (repeat) next(true);
             }
-
+          
             if (repeat) {
               next(true);
             } else {
@@ -4693,7 +4725,7 @@
         }
         if (!event.repeat && keyStates[keyBindings.zoom]) utils.weapons.zoom();
 
-        if (keyStates[keyBindings.shoot] && !keyRepeats[keyBindings.shoot]) {
+        if (keyStates[keyBindings.shoot] && !shootRapid) {
           shootRapid = true;
           utils.weapons.shoot(event.repeat);
         }
@@ -4741,10 +4773,12 @@
           gametime.run("halt", [gametime.player.uuid]);
         }
 
-        if (shootRapid) {
-          utils.weapons.stopShoot();
+        if (event.code === keyBindings.shoot) {
+          if (shootRapid) {
+            utils.weapons.stopShoot();
+          }
+          shootRapid = false;
         }
-        shootRapid = false;
       });
 
       document.addEventListener("mousemove", (event) => {
@@ -4815,7 +4849,7 @@
         window.LoadingManager.onfinish = function() {
           // Let other players know this player's presence
           let character = params().character || "SWAT";
-          gametime.run("join", [gametime.player.position, gametime.player.uuid, "SWAT", sandbox.username, character]);
+          gametime.run("join", [gametime.player.position, gametime.player.uuid, character, sandbox.username]);
         };
 
         window.LoadingManager.oncountdown = function() {
@@ -4966,6 +5000,8 @@
       TouchControls.speed = user.preferences.game.touchSpeed || 2;
       GamepadControls.speed = user.preferences.game.gamepadSpeed || 1;
       screenControls = [PointerControls, TouchControls];
+      PointerControls.minPolarAngle = Math.PI / 2 - THREE.MathUtils.degToRad(80);
+      PointerControls.maxPolarAngle = Math.PI / 2 + THREE.MathUtils.degToRad(80);
       // screenControls.forEach(controls => controls.isLocked = true);
 
       // Here, we'll set up a touch screen UI

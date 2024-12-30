@@ -497,6 +497,10 @@
         }
       };
 
+      if (user.loggedIn) {
+        document.querySelector(".tab[data-tab='account']").textContent = "ACCOUNT";
+      }
+
       function onWindowResize() {
         let averageScale = window.innerHeight / 900;
         let minWidth = 1440 * averageScale;
@@ -521,32 +525,9 @@
       window.addEventListener("resize", onWindowResize);
       onWindowResize();
 
-      function fetchUserData(callback = () => {}) {
-        if (localStorage["loginToken"]) {
-          let loginToken = localStorage["loginToken"];
-
-          fetch("https://hardy-beetle-free.ngrok-free.app/account/data", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "ngrok-skip-browser-warning": "69420"
-            },
-            body: JSON.stringify({
-              token: loginToken
-            })
-          }).then(response => response.json()).then(userData => {
-            user.logIn(userData);
-            callback();
-
-            document.querySelector(".wrapper").style.backgroundImage = `url(/images/other/menu/${user.preferences.menuBackground}.png)`;
-          });
-
-          document.querySelector(".tab[data-tab='account']").textContent = "ACCOUNT";
-        } else {
-          document.querySelector(".tab[data-tab='account']").textContent = "LOG IN";
-        }
-      }
-      fetchUserData();
+      user.logInCallback = function() {
+        document.querySelector(".wrapper").style.backgroundImage = `url(/images/other/menu/${user.preferences.menuBackground}.png)`;
+      };
 
       function menuDialog() {
         let output = swal.apply(null, arguments);
@@ -951,6 +932,7 @@
                   fetchUserData(function() {
                     //notification(`Welcome back, ${user.username}!`);
                   });
+                  document.querySelector(".tab[data-tab='account']").textContent = "ACCOUNT";
                 } else {
                   error();
                 }
@@ -1100,6 +1082,7 @@
               user.logOut();
               selectTab(document.querySelector(".tab[data-tab='play']"));
               fetchUserData();
+              document.querySelector(".tab[data-tab='account']").textContent = "LOG IN";
               //notification("successfully logged out")
             });
           }
