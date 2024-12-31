@@ -4989,6 +4989,11 @@
 
         await plugins.realDelay(17000);
 
+        let earnings = {};
+        earnings.medals = utils.medals.earned;
+        earnings.points = totalPoints;
+
+        localStorage.setItem("game-over-earnings", JSON.stringify(earnings));
         location.replace("/");
       }
       

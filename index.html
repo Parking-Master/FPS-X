@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPS-X</title>
+    <title>FPS X</title>
     <link rel="preload" href="/fonts/Thunderbolt.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="/images/logos/0.ico">
     <style>
       @import url("/fonts/WorkSans/WorkSans.css");
       @font-face {
@@ -437,6 +438,100 @@
         color: #ff0000;
         font-family: monospace, Arial;
       }
+      .stats-points-counter {
+        font-family: "Work Sans", Arial;
+        font-size: 20px;
+        font-weight: 300;
+        color: #fff;
+      }
+      .stats-points-counter .points {
+        font-family: "Work Sans", Arial;
+        font-size: 40px;
+        font-weight: 300;
+        color: #fff;
+      }
+      .stats-header {
+        font-family: "Work Sans", Arial;
+        font-size: 20px;
+        font-weight: 500;
+        color: #fff;
+      }
+      .medal {
+        color: #ddd;
+        margin-bottom: 10px;
+        font-family: Arial;
+        font-weight: 100;
+        text-shadow: 0 0 2px black;
+        display: inline-block;
+      }
+      .medal .medal-icon {
+        width: 50px;
+        vertical-align: middle;
+        line-height: 25px;
+        filter: invert(1);
+      }
+      .stats-games-counter {
+        font-family: "Work Sans", Arial;
+        font-size: 20px;
+        font-weight: 300;
+        color: #fff;
+      }
+      .stats-games-counter .games-played {
+        font-family: "Work Sans", Arial;
+        font-size: 40px;
+        font-weight: 300;
+        color: #fff;
+      }
+      .stats-wrapper {
+        position: absolute;
+        left: 100px;
+        bottom: 100px;
+      }
+      .nothing {
+        font-family: "Work Sans", Arial;
+        font-size: 30px;
+        font-weight: 500;
+        color: #aaa;
+      }
+      .character-select {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: 2.4px solid #fff;
+        border-radius: 8px;
+        padding: 8px;
+        width: 96px;
+        height: 192px;
+        margin-right: 8px;
+      }
+      .character-select.selected {
+        outline: 4.8px solid #fff;
+      }
+      .character-select:hover, .weapon-select.hover {
+        background: rgba(255, 255, 255, 0.25);
+        cursor: pointer;
+      }
+      .character-select-image {
+        width: 56px;
+        height: 112px;
+        filter: drop-shadow(1px 1px 1px rgba(255, 255, 255, 0.5));
+      }
+      .character-select-title {
+        color: #fff;
+        margin-left: 4px;
+        font-family: "Thunderbolt", Arial;
+        font-size: 16px;
+      }
+      .character-selection-wrapper {
+        position: relative;
+        margin: 0 !important;
+        left: 370px;
+      }
+      .character-selection {
+        position: relative;
+        display: flex;
+      }
     </style>
     <script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
   </head>
@@ -446,7 +541,7 @@
       <div class="tabs">
         <div class="tab selected" onclick="selectTab(this)" data-tab="play">PLAY</div>
         <div class="tab" onclick="selectTab(this)" data-tab="options">OPTIONS</div>
-        <div class="tab" onclick="selectTab(this)" data-tab="shop">SHOP</div>
+        <div class="tab" onclick="selectTab(this)" data-tab="stats">STATS</div>
         <div class="tab" onclick="selectTab(this)" data-tab="account">LOG IN</div>
       </div>
       <div class="content">
@@ -527,7 +622,27 @@
 
       user.logInCallback = function() {
         document.querySelector(".wrapper").style.backgroundImage = `url(/images/other/menu/${user.preferences.menuBackground}.png)`;
+        document.querySelector("link[rel=icon]").href = `/images/logos/${user.preferences.menuBackground}.ico`;
       };
+
+      if (localStorage["game-over-earnings"]) {
+        let earnings = JSON.parse(localStorage["game-over-earnings"]);
+        if (user.loggedIn) {
+          plugins.waitUntil(() => user.email).then(async () => {
+            let medals = user.preferences.medals;
+            let points = user.preferences.points;
+            let gamesPlayed = user.preferences.gamesPlayed;
+
+            user.set("medals", medals.concat(earnings.medals));
+            await plugins.delay(200);
+            user.set("points", points + earnings.points);
+            await plugins.delay(200);
+            user.set("gamesPlayed", gamesPlayed + 1);
+
+            localStorage.removeItem("game-over-earnings");
+          });
+        }
+      }
 
       function menuDialog() {
         let output = swal.apply(null, arguments);
@@ -724,6 +839,7 @@
         if (tab === "options") {
           let primaryWeapons = ["AK-74", "M16", "AR-15", "SCAR-H", "MK-14", "SKS"];
           let secondaryWeapons = ["FN-502", "Glock-19", "XD-Mod-2", "Desert-Eagle"];
+          let characters = ["SWAT", "Marine", "GasMask"];
 
           let content = document.createElement("div");
           content.innerHTML = `
@@ -766,6 +882,11 @@
               <button class="button controls-binding-button" onclick="externalAction('menu:controlsbinding_key')">Key bindings</button>
               <button class="button controls-binding-button" onclick="externalAction('menu:controlsbinding_gamepad')">Gamepad bindings</button>
             </div>
+
+            <div class="character-selection-wrapper">
+              <p class="options-header-main">Character</p>
+              <div class="character-selection"></div>
+            </div>
           </div>
           `;
 
@@ -787,6 +908,16 @@
           });
           content.querySelector(`.primary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[0]}"]`).classList.add("selected");
           content.querySelector(`.secondary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[1]}"]`).classList.add("selected");
+
+          characters.forEach(character => {
+            content.querySelector(".character-selection").innerHTML += `
+            <div class="character-select" data-character="${character}" onclick="externalAction('setcharacter:${character}')">
+              <img class="character-select-image" src="/images/other/characters/${character}.png">
+              <p class="character-select-title">${character}</p>
+            </div>
+            `;
+          });
+          content.querySelector(`.character-selection .character-select[data-character="${user.preferences.game.character}"]`).classList.add("selected");
 
           document.querySelector(".content").innerHTML = content.innerHTML;
 
@@ -820,6 +951,49 @@
             });
             slider.onchange(lookSensitivity[sliderElement.dataset.type] * 2);
           });
+        }
+        if (tab === "stats") {
+          if (!localStorage["loginToken"]) {
+            externalAction("redirect:login");
+            //notification("Please log in to view your stats.")
+          } else {
+            let content = document.createElement("div");
+            let medalWrapper = document.createElement("div");
+            let medals = user.preferences.medals;
+            if (medals.length === 0) {
+              medalWrapper.innerHTML = `
+              <p class="nothing">No medals earned yet.</p>
+              `;
+            }
+            medals.forEach(medal => {
+              if (medalWrapper.querySelector(`.medal[data-medal="${medal}"]`)) {
+                let medalElement = medalWrapper.querySelector(`.medal[data-medal="${medal}"]`);
+                let multiplier = Number(medalElement.querySelector("#multiplier").dataset.multiplier) + 1;
+                medalElement.querySelector("#multiplier").dataset.multiplier = multiplier;
+                medalElement.querySelector("#multiplier").textContent = `x${multiplier}`;
+              } else {
+                let medalName = medal.split("_").map(x => x[0].toUpperCase() + x.substr(1)).join(" ");
+                medalWrapper.innerHTML += `
+                <div class="medal" data-medal="${medal}"><img class="medal-icon" src="/images/icons/medals/${medal}.png"><span id="multiplier" data-multiplier="1"></span> <span id="name">${medalName}</span></div>
+                `;
+              }
+            });
+            content.innerHTML = `
+            <div class="stats-wrapper">
+              <p class="options-header-main">Your stats</p>
+              <p class="stats-header">Total points earned</p>
+              <p class="stats-points-counter"><span class="points">${user.preferences.points}</span> points</p>
+              <br>
+              <p class="stats-header">All medals earned</p>
+              ${medalWrapper.innerHTML}
+              <br>
+              <p class="stats-header">Total games played</p>
+              <p class="stats-games-counter"><span class="games-played">${user.preferences.gamesPlayed}</span> games</p>
+            </div>
+            `;
+
+            document.querySelector(".content").innerHTML = content.innerHTML;
+          }
         }
         if (tab === "account") {
           let content = document.createElement("div");
@@ -890,6 +1064,12 @@
 
           document.querySelector(`.secondary-weapon-selection .weapon-select.selected`).classList.remove("selected");
           document.querySelector(`.secondary-weapon-selection .weapon-select[data-weapon="${user.preferences.game.loadout[1]}"]`).classList.add("selected");
+        }
+        if (feature === "setcharacter") {
+          user.set("game.character", type);
+
+          document.querySelector(`.character-selection .character-select.selected`).classList.remove("selected");
+          document.querySelector(`.character-selection .character-select[data-character="${type}"]`).classList.add("selected");
         }
         if (feature === "account") {
           if (type === "login") {
@@ -1092,6 +1272,7 @@
           if (type === "changebackground") {
             user.set("menuBackground", document.querySelector(".select.menu-background").value);
             document.querySelector(".wrapper").style.backgroundImage = `url(/images/other/menu/${user.preferences.menuBackground}.png)`;
+            document.querySelector("link[rel=icon]").href = `/images/logos/${user.preferences.menuBackground}.ico`;
           }
         }
         if (feature === "redirect") {
