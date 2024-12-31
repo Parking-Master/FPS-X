@@ -3,6 +3,9 @@ FPS-X will be an open source version of [FPS](https://github.com/Parking-Master/
 
 Development on FPS-X has begun on __June 10th 2024__, and is not expected to be released until early December.
 
+### ❗ Major announcement: FPS-X releases December 31st!
+Tomorrow (12/31/2024) FPS-X will be fully released on its first version. There are some features that will be added in the coming weeks. But very soon, tomorrow, you will get full access to to the entire game.
+
 ### ❗ Update: Estimated release date
 We're finally almost there, with just about a month left of development before FPS-X is released for everyone to play! While it will still be a little bit longer until an exact release date is revealed, expect the game to release sometime during the first half of December, pushing more towards the "later" side of the month.
 
