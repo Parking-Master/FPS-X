@@ -11,7 +11,7 @@ We're finally almost there, with just about a month left of development before F
 
 ### ❗ Update: Development progress tracker
 This tracker shows the current progress of this project.
->65% <img height="10" width="65%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
+>65% <img height="10" width="92%" src="https://github.com/Parking-Master/Parking-Master-2.0/blob/main/images/bar.png" style="filter:invert(100%);border:1px solid #222;border-radius:5px;"><br>
 
 About 4 weeks left of development.
 
