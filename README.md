@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://fpsx.parkingmaster.tk/images/logos/0.ico" width="200" height="200">
-  <img src="https://github.com/user-attachments/assets/986bb843-c21e-4866-a9eb-a0e7c28a8e49">
+  <img src="https://github.com/user-attachments/assets/cf9ee500-c7f9-40d1-94c9-dab857d0ff7f">
 </p>
 <p align="center">A JavaScript FPS Game™</p>
 <br>
@@ -351,6 +351,121 @@ An Abandoned Downtown Center. Fits 4-8 players.
 <img src="https://fpsx.parkingmaster.tk/images/other/maps/Abandoned_City.png" width="500">
 
 <hr>
+
+# Help
+## How to play
+### Starting a game
+Note that you can customize your Game Mode, Map, and Team Size, but here we're just going to show you how to start a Default 1v1 mutliplayer match.
+1. Go to the main menu
+2. Click <ins>SEARCH FOR GAME</ins>
+3. Wait for our server to find a match.
+
+If you want to set your Game Presets before you start a game:
+1. Go to the main menu
+2. Click <ins>GAME PRESETS</ins>
+3. Set your presets.
+   - Game Mode: Can either be Default, Fiesta, or Snipers
+   - Map: Can either be Cargo Port, Breakthrough, Lihid, Ghost Town, Abandoned City, or random.
+   - Team Size: Can either be 1v1 or 2v2.
+4. When you're done, click <ins>SEARCH FOR GAME</ins>
+5. Wait for our server to find a match.
+
+### Changing Keyboard and Gamepad controls
+You can change your mouse speed, gamepad joystick speed, and all bindings in your settings. To do this:
+1. Go to the main menu
+2. Switch to the <kbd>OPTIONS</kbd> tab
+3. To change your mouse speed, gamepad joystick speed, or touch screen speed, drag the corresponding slider at the bottom left of the Options page.
+4. To change your key or button bindings, click <kbd>Key bindings</kbd> or <kbd>Gamepad bindings</kbd> on the bottom of the Options page.
+
+### Running a LAN sever
+Running a LAN (Local Area Network) server is beneficial for lower-latency games, especially if you're playing with friends and are already on the same network. By default, you are using a [Gametime.js X Public Socket Server](https://github.com/Parking-Master/Gametime.js-X#connecting-to-a-server) for multiplayer. But we are going to cover how you can easily host your own local Socket Server.
+
+#### Prerequisites
+Make sure you already have these installed:
+- Node.js
+- NPM
+- Socket.io
+- Git
+
+1. Download the [Socket Server File](https://github.com/Parking-Master/FPS-X/blob/main/socket.js) for FPS X
+2. Find the path to the file you downloaded, then run:
+   - `$ node /path/to/file.js`
+   - This will start the socket server on your machine.
+3. In order to connect your socket server to FPS X, you need to find either your machine's IP address or Hostname. How you find it will vary between Mac, Windows, and Linux. You can also just use [localhost:4444](http://localhost:4444).
+4. Download FPS X onto your system using either `git`, or by downloading from the source:
+   - `$ git clone https://github.com/Parking-Master/FPS-X`
+   - Or download manually from [here](https://github.com/Parking-Master/FPS-X/archive/refs/heads/main.zip)
+5. With FPS X now installed, go to the downloaded folder, and edit the files `index.html` and `src.html`.
+6. Find the lines that start with `gametime.setCustomServer`. Then, as one of the server URLs, add the hostname or IP address of your socket server into the server list.
+7. Save the file, then run `$ node server.js` in the FPS X directory.
+8. Go to [localhost:8080](http://localhost:8080), and you will see the FPS X main menu. [Start a game](#starting-a-game) and it will attempt to find a game through your local network.
+
+Also feel free to edit the code yourself after your download FPS X. You can add custom mods, cheats, or even change the graphics!
+
+## Controls
+Your default key bindings:
+- W: Walk forward
+- A: Walk left
+- S: Walk backwards
+- D: Walk right
+- F: Fire weapon
+- R: Reload weapon
+- I: Toggle weapon zoom
+- B: Melee (punch)
+- Y: Switch weapon
+- G: Throw grenade
+- E: Interact/Pick up
+- Space: Jump
+- ShiftLeft (hold): Sprint
+
+Your default gamepad bindings (for Xbox One controllers):
+- (L): Walk
+- (RT): Fire weapon
+- (RB): Reload weapon
+- (R): Toggle weapon zoom
+- (B): Melee (punch)
+- (Y): Switch weapon
+- (LT): Throw grenade
+- (RB) (hold): Interact/Pick up
+- (A): Jump
+- (X): Sprint
+
+You can change all of these bindings in your [settings](#changing-keyboard-and-gamepad-controls).
+
+## Settings
+To change your loadout:
+1. Go to the main menu
+2. Switch to the <kbd>OPTIONSM</kbd> tab
+3. Select your preferred primary weapon
+3. Select your preferred secondary weapon
+
+To change your character:
+1. Go to the main menu
+2. Switch to the <kbd>OPTIONS</kbd> tab
+3. Select your preferred character
+
+To change your account username:
+1. Make sure you have an account and are logged in first
+2. Go to the main menu
+3. Switch to the <kbd>ACCOUNT</kbd> tab
+4. Click on your username, then type in your new one
+5. Click the checkmark and your username will save
+
+To reset your password:
+1. Make sure you have an account and are logged in first
+2. Go to the main menu
+3. Switch to the <kbd>ACCOUNT</kbd> tab
+4. Click on <kbd>Reset password</kbd>
+5. And email will be sent to the email address you signed up with
+6. Click the link in the email
+7. Type in your new password and save it
+
+To change your menu wallpaper:
+1. Make sure you have an account and are logged in first
+2. Go to the main menu
+3. Switch to the <kbd>ACCOUNT</kbd> tab
+4. Click on the selection button below <ins>Menu background</ins>
+5. Select between 4 different wallpapers. The website logo will also change to compliment your new wallpaper.
 
 # Contributions
 Huge thanks to all supporters of Parking Master in 2024! We're very grateful to publish high-quality games and content similar to FPS X every year, and to have people like you react and enjoy the games means a lot to us. Thank you all!
