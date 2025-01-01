@@ -400,7 +400,7 @@ Make sure you already have these installed:
 7. Save the file, then run `$ node server.js` in the FPS X directory.
 8. Go to [localhost:8080](http://localhost:8080), and you will see the FPS X main menu. [Start a game](#starting-a-game) and it will attempt to find a game through your local network.
 
-Also feel free to edit the code yourself after your download FPS X. You can add custom mods, cheats, or even change the graphics!
+Also feel free to edit the code yourself after you download FPS X. You can add custom mods, cheats, or even change the graphics!
 
 ## Controls
 Your default key bindings:
