@@ -162,6 +162,14 @@
         width: 75%;
         left: 50%;
         margin-left: -42%;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .swal-content.scrollable a {
+        color: #416dea !important;
+        text-decoration: none;
+      }
+      .swal-content.scrollable a:hover {
+        text-decoration: underline;
       }
       .weapon-select {
         display: inline-flex;
@@ -532,6 +540,12 @@
         position: relative;
         display: flex;
       }
+      code {
+        background: #ddd;
+        padding: 3px;
+        font-size: 13px;
+        border-radius: 3px;
+      }
     </style>
     <script src="https://unpkg.com/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
   </head>
@@ -790,24 +804,34 @@
         } else if (action === "custom-lan-server") {
           let content = document.createElement("div");
           content.innerHTML = `
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
-          e<br>
+          <h3>Running a LAN sever</h3>
+          <p>Running a LAN (Local Area Network) server is beneficial for lower-latency games, especially if you're playing with friends and are already on the same network. By default, you are using a Gametime.js X Public Socket Server for multiplayer. But we are going to cover how you can easily host your own local Socket Server.</p>
+          <h4>Prerequisites</h4>
+          <p>Make sure you already have these installed:</p>
+          <ul>
+            <li>Node.js</li>
+            <li>NPM</li>
+            <li>Socket.io</li>
+            <li>Git</li>
+          </ul>
+          <ol>
+            <li>Download the <a href="https://github.com/Parking-Master/FPS-X/blob/main/socket.js" target="_blank">Socket Server File</a> for FPS X</li>
+            <li>Find the path to the file you downloaded, then run:</li>
+            <li><code>$ node /path/to/file.js</code></li>
+            <li>This will start the socket server on your machine.</li>
+            <li>In order to connect your socket server to FPS X, you need to find either your machine's IP address or Hostname. How you find it will vary between Mac, Windows, and Linux. You can also just use <a href="http://localhost:4444" target="_blank">localhost:4444</a>.</li>
+            <li>Download FPS X onto your system using either git, or by downloading from the source:</li>
+            <li><code>$ git clone https://github.com/Parking-Master/FPS-X</code></li>
+            <li>Or download manually from <a href="https://github.com/Parking-Master/FPS-X/archive/refs/heads/main.zip" target="_blank">here</a></li>
+            <li>With FPS X now installed, go to the downloaded folder, and edit the files <code>index.html</code> and <code>src.html</code>.
+            <li>Find the lines that start with <code>gametime.setCustomServer</code>. Then, as one of the server URLs, add the hostname or IP address of your socket server into the server list.</li>
+            <li>Save the file, then run <code>$ node server.js</code> in the FPS X directory.</li>
+            <li>Go to <a href="http://localhost:8080" target="_blank">localhost:8080</a>, and you will see the FPS X main menu. <a href="https://github.com/Parking-Master/FPS-X#starting-a-game" target="_blank">Start a game</a> and it will attempt to find a game through your local network.</li>
+          </ol>
+          <p>Also feel free to edit the code yourself after your download FPS X. You can add custom mods, cheats, or even change the graphics!</p>
           `;
           menuDialog({
-            title: "Run your own FPS-X server",
+            title: "Run your own FPS X server",
             content: content,
             button: "Close",
             closeOnEsc: false,
