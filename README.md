@@ -358,4 +358,4 @@ Huge thanks to all supporters of Parking Master in 2024! We're very grateful to 
 # License
 Licensed under the MIT License.
 
-Copyright (c) 2024 Parking Master.
+Copyright &copy; 2024 Parking Master.
