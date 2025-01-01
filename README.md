@@ -435,7 +435,7 @@ You can change all of these bindings in your [settings](#changing-keyboard-and-g
 ## Settings
 To change your loadout:
 1. Go to the main menu
-2. Switch to the <kbd>OPTIONSM</kbd> tab
+2. Switch to the <kbd>OPTIONS</kbd> tab
 3. Select your preferred primary weapon
 3. Select your preferred secondary weapon
 
