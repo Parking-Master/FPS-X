@@ -486,9 +486,45 @@ __Resources used in the making of FPS X__
 - [iconmonstr](https://iconmonstr.com) - Used for the icon "Caret:Right:Filled"
 - [MaisFontes](https://en.maisfontes.com) - Used for the font "Thunderbolt 76"
 - [FontsFree.pro](https://fontsfree.pro) - Used for the font "Arame"
-- [Font Awesome](https://fontawesome.com) - Used for the icons: fa-trophy, fa-arrow-right, fa-check
+- [Font Awesome](https://fontawesome.com) - Used for the icons: fa-trophy, fa-a rrow-right, fa-check
 - [Sketchfab](https://sketchfab.com) - Used for all 3D models
 - [Blender](https://blender.org) - Used for modifying specific 3D models
+
+__Models used in FPS X__
+- Cargo Port Multipayer Map - by [mohsenheydari](https://github.com/mohsenheydari)
+- Breakthrough Multipayer Map - by [Space_One](https://sketchfab.com/aslbekburonbey)
+- Lihid Multipayer Map - _not available_
+- Ghost Town Multipayer Map - by [Ryzas](https://sketchfab.com/rzyas)
+- Abandoned City Multipayer Map - _not available_
+- AK-74 Weapon - by [Cransh](https://sketchfab.com/ccransh)
+- AR-15 Weapon - by [Rendy K](https://sketchfab.com/RendyK)
+- M16 Weapon - by [Luchador](https://sketchfab.com/Luchador90)
+- MK-14 Weapon - by [Soroush Shokouhi](https://sketchfab.com/SoRoUsH24)
+- SCAR-H Weapon - by [TastyTony](https://sketchfab.com/TastyTony)
+- SKS Weapon - by [The Unknown...](https://sketchfab.com/1514112)
+- Glock-19 Weapon - _not available_
+- XD-Mod-2 Weapon - by [Cransh](https://sketchfab.com/ccransh)
+- FN-502 Weapon - by [Cransh](https://sketchfab.com/ccransh)
+- Desert-Eagle Weapon - by [attix84work](https://sketchfab.com/attix84work)
+- Railgun Weapon - by [CaesarSypha](https://sketchfab.com/CaesarSypha)
+- Precision-Railgun Weapon - by [Falxxx](https://sketchfab.com/Falxxx)
+- HK-G28 Weapon - by [trolosqlfod](https://sketchfab.com/trolosqlfod)
+- AWP-L96 Weapon - _not available_
+- M40a3 Weapon - by [Observer3D](https://sketchfab.com/3danalyst)
+- Barrett-50cal Weapon - by [olofunot](https://sketchfab.com/olofunot)
+- Remington-870 Weapon - by [FinBass](https://sketchfab.com/FinBass)
+- Keltec-KSG Weapon - _not available_
+- Drum-Shotgun Weapon - by [jdiab1207](https://sketchfab.com/jdiab1207)
+- Grenade-Launcher Weapon - by [jameslucino117](https://sketchfab.com/jameslucino117)
+- Rocket-Launcher Weapon - by [irons3th](https://sketchfab.com/irons3th)
+- RPG-7 Weapon - by [Tactical_Beard](https://sketchfab.com/Tactical_Beard)
+- M60 Weapon - by [Kingy](https://sketchfab.com/kingy)
+- S.W.A.T. Character - by [mixamo.com](https://mixamo.com)
+- Marine Character - by [mixamo.com](https://mixamo.com)
+- GasMask Character - by [mixamo.com](https://mixamo.com)
+- Frag Grenade - by [hsevencg](https://sketchfab.com/hsevencg)
+- Explosion Object - by [saeed khalili](https://sketchfab.com/saeedkhalili.ir)
+- Weapon Crate - by [lil_bentley](https://sketchfab.com/lil_bentley)
 
 # License
 Licensed under the MIT License.
