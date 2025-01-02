@@ -316,13 +316,13 @@ _Weapons are listed in the order in which they were added._
 
 ## Characters
 ### S.W.A.T.
-<img src="https://fpsx.parkingmaster.tk/images/other/characters/SWAT.png" width="100">
+<kbd><img src="https://fpsx.parkingmaster.tk/images/other/characters/SWAT.png" width="100"></kbd>
 
 ### Marine
-<img src="https://fpsx.parkingmaster.tk/images/other/characters/Marine.png" width="100">
+<kbd><img src="https://fpsx.parkingmaster.tk/images/other/characters/Marine.png" width="100"></kbd>
 
 ### Gas Mask
-<img src="https://fpsx.parkingmaster.tk/images/other/characters/GasMask.png" width="100">
+<kbd><img src="https://fpsx.parkingmaster.tk/images/other/characters/GasMask.png" width="100"></kbd>
 
 ## Maps
 ### Cargo Port
@@ -469,6 +469,26 @@ To change your menu wallpaper:
 
 # Contributions
 Huge thanks to all supporters of Parking Master in 2024! We're very grateful to publish high-quality games and content similar to FPS X every year, and to have people like you react and enjoy the games means a lot to us. Thank you all!
+
+# Credits
+__Resources used in the making of FPS X__
+- [Freenom](https://freenom.com) - Used as the website domain `fpsx.parkingmaster.tk`
+- [THREE.js](https://threejs.org) - Used for 3D object rendering
+- [Node.js](https://nodejs.org) - Used for the FPS X public server and bot hosting
+- [Express.js](https://expressjs.com) - Used for the FPS X public server and bot hosting
+- [Socket.io](https://socket.io) - Used as the main Gametime.js-X public socket servers
+- [Gametime.js-X](https://x.gametime.js.org) - Used for multiplayer functionality
+- [Canva](https://canva.com) - Used for 4 logos, weapon crosshair, adjusting image settings, and design inspiration for the menu
+- [GitHub Pages](https://pages.github.com) - Used for publicly hosting FPS X
+- [PubNub](https://www.pubnub.com) - Used in Gametime.js-X as a backup websocket server
+- [Google Fonts](https://fonts.google.com) - Used for the fonts "Work Sans" and "Montserrat"
+- [Google Icons](https://fonts.google.com/icons) - Used for most UI icons in-game
+- [iconmonstr](https://iconmonstr.com) - Used for the icon "Caret:Right:Filled"
+- [MaisFontes](https://en.maisfontes.com) - Used for the font "Thunderbolt 76"
+- [FontsFree.pro](https://fontsfree.pro) - Used for the font "Arame"
+- [Font Awesome](https://fontawesome.com) - Used for the icons: fa-trophy, fa-arrow-right, fa-check
+- [Sketchfab](https://sketchfab.com) - Used for all 3D models
+- [Blender](https://blender.org) - Used for modifying specific 3D models
 
 # License
 Licensed under the MIT License.
