@@ -4228,7 +4228,7 @@
               };
             }
 
-            Object.values(result).forEach(medal => utils.medals.earned.push(medal));
+            Object.values(result).forEach(medal => utils.medals.earned.push(medal.id));
             return result;
           },
           display: function(headshot = false) {
@@ -4990,7 +4990,7 @@
         await plugins.realDelay(17000);
 
         let earnings = {};
-        earnings.medals = utils.medals.earned;
+        earnings.medals = utils.medals.earned.map(medal => medal.id);
         earnings.points = totalPoints;
 
         localStorage.setItem("game-over-earnings", JSON.stringify(earnings));
