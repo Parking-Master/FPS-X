@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://fpsx.parkingmaster.tk/images/logos/0.ico" width="200" height="200">
+  <img src="https://x.fps.webredirect.org/images/logos/0.ico" width="200" height="200">
   <img src="https://github.com/user-attachments/assets/cf9ee500-c7f9-40d1-94c9-dab857d0ff7f">
 </p>
 <p align="center">A JavaScript FPS Game™</p>
@@ -30,7 +30,7 @@ FPS X is an online multiplayer shooter game developed by [Parking Master](https:
 
 It is the fourth game in the series so far, following FPS, FPS2, and FPS3. FPS X was based on FPS3, but entirely remade for highly improved performance, better graphics, and ease of use. The game contains 23 weapons, 5 multiplayer maps, 3 different game modes, and 3 characters to choose from. The game also includes a way to run a local socket server on your network for lower latency or as a LAN game. Up to 4 players can play a single match.
 
-FPS X is now available to play at [fpsx.parkingmaster.tk](https://fpsx.parkingmaster.tk).
+FPS X is now available to play at [x.fps.webredirect.org](https://x.fps.webredirect.org).
 
 # Improvements
 This game is fully compatible with most newer iPad models, most Macbooks and iMacs, most Android tablet and smartphone models, and even some newer iPhones. It is available to play via Mouse/Keyboard, Touch Screen controls, and Gamepad controls. Unlike the previous games, FPS X now has options to fully change Key and Controller bindings.
@@ -77,7 +77,7 @@ FPS X was tested successfully on the following devices:
 _Weapons are listed in the order in which they were added._
 
 ### └ AK-74
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/AK-74.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/AK-74.png" width="100">
 
 - Damage 5%
 - Headshot damage 8%
@@ -88,7 +88,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ AR-15
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/AR-15.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/AR-15.png" width="100">
 
 - Damage 10%
 - Headshot damage 12%
@@ -98,7 +98,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 3 mags
 
 ### └ M16
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/M16.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/M16.png" width="100">
 
 - Damage 10%
 - Headshot damage 20%
@@ -109,7 +109,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ MK-14
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/MK-14.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/MK-14.png" width="100">
 
 - Damage 20%
 - Headshot damage 40%
@@ -120,7 +120,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ SCAR-H
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/SCAR-H.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/SCAR-H.png" width="100">
 
 - Damage 20%
 - Headshot damage 25%
@@ -131,7 +131,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ SKS
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/SKS.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/SKS.png" width="100">
 
 - Damage 40%
 - Headshot damage 100%
@@ -141,7 +141,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 2 mags
 
 ### └ Glock 19
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Glock-19.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Glock-19.png" width="100">
 
 - Damage 6%
 - Headshot damage 9%
@@ -151,7 +151,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 2 mags
 
 ### └ XD Mod Sub-Compact 2
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/XD-Mod-2.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/XD-Mod-2.png" width="100">
 
 - Damage 5%
 - Headshot damage 10%
@@ -161,7 +161,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 2 mags
 
 ### └ FN 502
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/FN-502.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/FN-502.png" width="100">
 
 - Damage 10%
 - Headshot damage 15%
@@ -171,7 +171,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 2 mags
 
 ### └ Desert Eagle
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Desert-Eagle.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Desert-Eagle.png" width="100">
 
 - Damage 30%
 - Headshot damage 50%
@@ -181,7 +181,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 2 mags
 
 ### └ Railgun
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Railgun.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Railgun.png" width="100">
 
 - Damage 100%
 - Headshot damage 100%
@@ -191,7 +191,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 3 clips
 
 ### └ Precision Railgun
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Precision-Railgun.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Precision-Railgun.png" width="100">
 
 - Damage 100%
 - Headshot damage 100%
@@ -202,7 +202,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ HK G28
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/HK-G28.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/HK-G28.png" width="100">
 
 - Damage 45%
 - Headshot damage 100%
@@ -213,7 +213,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ AWP L96
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/AWP-L96.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/AWP-L96.png" width="100">
 
 - Damage 70%
 - Headshot damage 100%
@@ -224,7 +224,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ M40a3
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/M40a3.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/M40a3.png" width="100">
 
 - Damage 35%
 - Headshot damage 100%
@@ -235,7 +235,7 @@ _Weapons are listed in the order in which they were added._
 
 
 ### └ Barrett .50 cal
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Barrett-50cal.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Barrett-50cal.png" width="100">
 
 - Damage 100%
 - Headshot damage 100%
@@ -245,7 +245,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 1 mags
 
 ### └ Remington 870
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Remington-870.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Remington-870.png" width="100">
 
 - Damage 15%
 - Headshot damage 20%
@@ -255,7 +255,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 1 mags
 
 ### └ Keltec KSG
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Keltec-KSG.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Keltec-KSG.png" width="100">
 
 - Damage 10%
 - Headshot damage 30%
@@ -265,7 +265,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 1 mags
 
 ### └ Drum-Mag Shotgun
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Drum-Shotgun.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Drum-Shotgun.png" width="100">
 
 - Damage 7%
 - Headshot damage 9%
@@ -275,7 +275,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 1 mags
 
 ### └ Grenade Launcher
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Grenade-Launcher.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Grenade-Launcher.png" width="100">
 
 - Damage 100%
 - Headshot damage 100%
@@ -285,7 +285,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 1 grenades
 
 ### └ Rocket Launcher
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/Rocket-Launcher.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/Rocket-Launcher.png" width="100">
 
 - Damage 100%
 - Headshot damage 100%
@@ -295,7 +295,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 1 rockets
 
 ### └ RPG-7
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/RPG-7.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/RPG-7.png" width="100">
 
 - Damage 100%
 - Headshot damage 100%
@@ -305,7 +305,7 @@ _Weapons are listed in the order in which they were added._
 - Magazine capacity: 2 rockets
 
 ### └ M60
-<img src="https://fpsx.parkingmaster.tk/images/other/weapons/M60.png" width="100">
+<img src="https://x.fps.webredirect.org/images/other/weapons/M60.png" width="100">
 
 - Damage 5%
 - Headshot damage 10%
@@ -316,39 +316,39 @@ _Weapons are listed in the order in which they were added._
 
 ## Characters
 ### S.W.A.T.
-<kbd><img src="https://fpsx.parkingmaster.tk/images/other/characters/SWAT.png" width="100"></kbd>
+<kbd><img src="https://x.fps.webredirect.org/images/other/characters/SWAT.png" width="100"></kbd>
 
 ### Marine
-<kbd><img src="https://fpsx.parkingmaster.tk/images/other/characters/Marine.png" width="100"></kbd>
+<kbd><img src="https://x.fps.webredirect.org/images/other/characters/Marine.png" width="100"></kbd>
 
 ### Gas Mask
-<kbd><img src="https://fpsx.parkingmaster.tk/images/other/characters/GasMask.png" width="100"></kbd>
+<kbd><img src="https://x.fps.webredirect.org/images/other/characters/GasMask.png" width="100"></kbd>
 
 ## Maps
 ### Cargo Port
 A Cargo Loading Port. Fits 4-8 players.
 <br>
-<img src="https://fpsx.parkingmaster.tk/images/other/maps/Cargo_Port.png" width="500">
+<img src="https://x.fps.webredirect.org/images/other/maps/Cargo_Port.png" width="500">
 
 ### Breakthrough
 Isolated Shipping Facility. Fits 2-4 players.
 <br>
-<img src="https://fpsx.parkingmaster.tk/images/other/maps/Breakthrough.png" width="500">
+<img src="https://x.fps.webredirect.org/images/other/maps/Breakthrough.png" width="500">
 
 ### Lihid
 Abandoned Gold Mining Zone in the Desert. Fits 4-8 players.
 <br>
-<img src="https://fpsx.parkingmaster.tk/images/other/maps/Lihid.png" width="500">
+<img src="https://x.fps.webredirect.org/images/other/maps/Lihid.png" width="500">
 
 ### Ghost Town
 An Abandoned Ghost Town. Fits 4-8 players.
 <br>
-<img src="https://fpsx.parkingmaster.tk/images/other/maps/Ghost_Town.png" width="500">
+<img src="https://x.fps.webredirect.org/images/other/maps/Ghost_Town.png" width="500">
 
 ### Abandoned City
 An Abandoned Downtown Center. Fits 4-8 players.
 <br>
-<img src="https://fpsx.parkingmaster.tk/images/other/maps/Abandoned_City.png" width="500">
+<img src="https://x.fps.webredirect.org/images/other/maps/Abandoned_City.png" width="500">
 
 <hr>
 
@@ -472,7 +472,7 @@ Huge thanks to all supporters of Parking Master in 2024! We're very grateful to 
 
 # Credits
 __Resources used in the making of FPS X__
-- [Freenom](https://freenom.com) - Used as the website domain `fpsx.parkingmaster.tk`
+- [Freenom](https://freenom.com) - Used as the website domain `x.fps.webredirect.org`
 - [THREE.js](https://threejs.org) - Used for 3D object rendering
 - [Node.js](https://nodejs.org) - Used for the FPS X public server and bot hosting
 - [Express.js](https://expressjs.com) - Used for the FPS X public server and bot hosting
